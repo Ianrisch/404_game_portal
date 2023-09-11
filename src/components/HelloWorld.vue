@@ -21,10 +21,9 @@
             <v-icon
               icon="mdi-view-dashboard"
               size="large"
-              start
             />
 
-            sjkfdnskdfnskdjf
+            Components
           </v-btn>
         </v-col>
 
@@ -41,7 +40,6 @@
             <v-icon
               icon="mdi-speedometer"
               size="large"
-              start
             />
 
             Get Started
@@ -59,7 +57,6 @@
             <v-icon
               icon="mdi-account-group"
               size="large"
-              start
             />
 
             Community
