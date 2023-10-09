@@ -2,6 +2,8 @@ namespace _404_game_portal.backend.Entities;
 
 public class Game
 {
+    public Guid Id  { get; set; }
+
     public string Name { get; set; }
     public List<Platform> Platforms { get; set; }
     public USK USK { get; set; }
