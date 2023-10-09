@@ -13,11 +13,11 @@ public class Context : DbContext
         _configurationManager = configurationManager;
     }
 
-    private const string ConnectionString = "server=localhost;port=3306;database=GamePortal;user=root;password=root";
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySql(_configurationManager.GetConnectionString("Database"), new MySqlServerVersion(new Version(10, 3, 18)));
+        var connectionString = _configurationManager.GetConnectionString("Database");
+        optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(10, 3, 18)));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -11,7 +11,7 @@ using _404_game_portal.backend;
 namespace _404_game_portal.backend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231009075059_InitialCreate")]
+    [Migration("20231009084308_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
