@@ -1,4 +1,6 @@
-﻿namespace _404_game_portal.backend;
+﻿using _404_game_portal.backend.Repositories;
+
+namespace _404_game_portal.backend;
 
 public class Startup
 {
@@ -38,5 +40,10 @@ public class Startup
             options.AddPolicy(name: "MyAllowSpecificOrigins",
                 corsPolicyBuilder => { corsPolicyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();  });
         });  
+    }
+
+    private void AddRepositories()
+    {
+        _services.AddScoped<IGameRepository, GameRepository>();
     }
 }

@@ -6,6 +6,8 @@ namespace _404_game_portal.backend.Repositories;
 public interface IGameRepository
 {
     public Game GetById(Guid id);
+
+    public Game Create(Game game);
 }
 
 public class GameRepository : IGameRepository
@@ -19,6 +21,13 @@ public class GameRepository : IGameRepository
 
     public Game GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _context.Games.SingleOrDefault(e => e.Id == id ,new Game());
+    }
+
+    public Game Create(Game game)
+    {
+        _context.Games.Add(game);
+        _context.SaveChanges();
+        return game;
     }
 }
