@@ -1,12 +1,15 @@
 using _404_game_portal.backend.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace _404_game_portal.backend.Repositories;
+
 public interface ILanguageRepository
 {
     public Language GetById(Guid id);
-    public Language Create(Language game);
+    public Language Create(Language language);
     public List<Language> GetAll();
 }
+
 public class LanguageRepository : ILanguageRepository
 {
     private readonly Context _context;
@@ -21,9 +24,11 @@ public class LanguageRepository : ILanguageRepository
         throw new NotImplementedException();
     }
 
-    public Language Create(Language game)
+    public Language Create(Language language)
     {
-        throw new NotImplementedException();
+        _context.Languages.Add(language);
+        _context.SaveChanges();
+        return language;
     }
 
     public List<Language> GetAll()
