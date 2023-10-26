@@ -21,7 +21,9 @@ public class LanguageRepository : ILanguageRepository
 
     public Language GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _context.Languages
+            .Include(e => e.Games)
+            .SingleOrDefault(e => e.Id == id) ?? new Language();
     }
 
     public Language Create(Language language)
