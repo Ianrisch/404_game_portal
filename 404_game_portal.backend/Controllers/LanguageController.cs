@@ -26,4 +26,11 @@ public class LanguageController : ControllerBase
     {
         return _languageRepository.GetById(id);
     }
+
+    [HttpPost]
+    public Language Create(LanguageCreationViewModel creationViewModel)
+    {
+        var language = new Language(creationViewModel);
+        return _languageRepository.Create(language);
+    }
 }
