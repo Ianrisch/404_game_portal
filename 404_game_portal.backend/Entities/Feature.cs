@@ -12,8 +12,7 @@ public class Feature
 
     public Feature(FeatureViewModel featureViewModel)
     {
-        if (featureViewModel.Id is not null)
-            Id = (Guid)featureViewModel.Id;
+        Id = featureViewModel.Id;
 
         FeatureName = featureViewModel.FeatureName;
         FeatureDescription = featureViewModel.FeatureDescription;
