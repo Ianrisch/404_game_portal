@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _404_game_portal.backend.Controllers;
 
-[ApiController] 
-[Route("[controller]")] 
+[ApiController]
+[Route("[controller]")]
 public class GameController : ControllerBase
 {
     private readonly IGameRepository _gameRepository;
@@ -14,6 +14,12 @@ public class GameController : ControllerBase
     public GameController(IGameRepository gameRepository)
     {
         _gameRepository = gameRepository;
+    }
+
+    [HttpGet]
+    public List<Game> GetAll()
+    {
+        return _gameRepository.GetAll();
     }
 
     [HttpPost]
