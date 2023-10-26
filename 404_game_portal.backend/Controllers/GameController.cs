@@ -28,4 +28,10 @@ public class GameController : ControllerBase
         var game = new Game(creationViewModel);
         return _gameRepository.Create(game);
     }
+
+    [HttpGet("{id:guid}")]
+    public Game GetById(Guid id)
+    {
+        return _gameRepository.GetById(id);
+    }
 }

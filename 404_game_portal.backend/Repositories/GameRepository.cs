@@ -22,7 +22,12 @@ public class GameRepository : IGameRepository
 
     public Game GetById(Guid id)
     {
-        return _context.Games.SingleOrDefault(e => e.Id == id, new Game());
+        return _context.Games
+            .Include(e => e.Platforms)
+            .Include(e => e.Prices)
+            .Include(e => e.Features)
+            .Include(e => e.Languages)
+            .SingleOrDefault(e => e.Id == id) ?? new Game();
     }
 
     public Game Create(Game game)
