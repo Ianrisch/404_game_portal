@@ -28,6 +28,6 @@ public class LanguageRepository : ILanguageRepository
 
     public List<Language> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.Languages.Include(e => e.Games).ToList();
     }
 }
