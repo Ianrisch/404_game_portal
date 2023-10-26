@@ -28,7 +28,9 @@ public class FeatureRepository : IFeatureRepository
 
     public Feature Create(Feature feature)
     {
-        throw new NotImplementedException();
+        _context.Features.Add(feature);
+        _context.SaveChanges();
+        return feature;
     }
 
     public List<Feature> GetAll()
