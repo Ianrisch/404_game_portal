@@ -8,7 +8,7 @@ public interface IGameRepository
     public Game GetById(Guid id);
 
     public Game Create(Game game);
-    List<Game> GetAll();
+    public List<Game> GetAll();
 }
 
 public class GameRepository : IGameRepository
