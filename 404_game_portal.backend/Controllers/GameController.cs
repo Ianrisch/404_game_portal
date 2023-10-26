@@ -19,18 +19,7 @@ public class GameController : ControllerBase
     [HttpPost]
     public Game Create(GameCreationViewModel creationViewModel)
     {
-        var game = new Game
-        {
-            Name = creationViewModel.Name,
-            Platforms = creationViewModel.Platforms,
-            USK = creationViewModel.USK,
-            Prices = creationViewModel.Prices,
-            ReleaseDate = creationViewModel.ReleaseDate,
-            Description = creationViewModel.Description,
-            Features = creationViewModel.Features,
-            Languages = creationViewModel.Languages
-        };
-
+        var game = new Game(creationViewModel);
         return _gameRepository.Create(game);
     }
 }

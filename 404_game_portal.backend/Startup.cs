@@ -18,12 +18,15 @@ public class Startup
     
     private void AddServices()
     {
-        _services.AddControllers();
+        _services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         _services.AddEndpointsApiExplorer();
         _services.AddSwaggerGen();
         AddCustomDbContext();
         AddCustomCors();
+        AddRepositories();
     }
+
+
 
     private void AddCustomDbContext()
     {
