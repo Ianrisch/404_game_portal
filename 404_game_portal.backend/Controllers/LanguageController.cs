@@ -1,4 +1,6 @@
+using _404_game_portal.backend.Entities;
 using _404_game_portal.backend.Repositories;
+using _404_game_portal.backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _404_game_portal.backend.Controllers;
@@ -11,5 +13,11 @@ public class LanguageController : ControllerBase
     public LanguageController(ILanguageRepository languageRepository)
     {
         _languageRepository = languageRepository;
+    }
+
+    [HttpGet]
+    public List<Language> GetAll()
+    {
+        return _languageRepository.GetAll();
     }
 }
