@@ -1,4 +1,5 @@
 using _404_game_portal.backend.Entities;
+using _404_game_portal.backend.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace _404_game_portal.backend.Repositories;
@@ -9,6 +10,7 @@ public interface IGameRepository
 
     public Game Create(Game game);
     public List<Game> GetAll();
+    List<Game> GetByIds(List<Guid> games, bool includeAll = false);
 }
 
 public class GameRepository : IGameRepository
@@ -45,5 +47,15 @@ public class GameRepository : IGameRepository
             .Include(e => e.Features)
             .Include(e => e.Languages)
             .ToList();
+    }
+
+    public List<Game> GetByIds(List<Guid> games, bool includeAll = false)
+    {
+        return _context.Games
+            .IncludeIf(includeAll,e => e.Platforms)
+            .IncludeIf(includeAll,e => e.Prices)
+            .IncludeIf(includeAll,e => e.Features)
+            .IncludeIf(includeAll,e => e.Languages)
+            .Where(e => games.Contains(e.Id)).ToList();
     }
 }
