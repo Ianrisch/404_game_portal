@@ -35,6 +35,6 @@ public class FeatureRepository : IFeatureRepository
 
     public List<Feature> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.Features.Include(e => e.Games).ToList();
     }
 }
