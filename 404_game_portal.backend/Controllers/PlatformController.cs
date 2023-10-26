@@ -6,5 +6,5 @@ namespace _404_game_portal.backend.Controllers;
 [Route("[controller]")]
 public class PlatformController : ControllerBase
 {
-    private readonly
+    
 }
