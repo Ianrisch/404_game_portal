@@ -10,5 +10,5 @@ public class GameCreationViewModel
     public DateOnly ReleaseDate { get; set; }
     public string Description { get; set; }
     public List<Feature>? Features { get; set; }
-    public List<LanguageCreationViewModel> Languages { get; set; }
+    public List<LanguageViewModel> Languages { get; set; }
 }
