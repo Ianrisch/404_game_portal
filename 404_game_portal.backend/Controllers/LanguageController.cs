@@ -20,4 +20,10 @@ public class LanguageController : ControllerBase
     {
         return _languageRepository.GetAll();
     }
+
+    [HttpGet("{id:guid}")]
+    public Language GetById(Guid id)
+    {
+        return _languageRepository.GetById(id);
+    }
 }
