@@ -17,6 +17,14 @@ public class Language
         LanguageName = languageViewModel.LanguageName;
     }
 
+    public Language(LanguageCreationViewModel creationViewModel)
+    {
+        if (creationViewModel.Games is not null)
+            Games = creationViewModel.Games;
+        LanguageName = creationViewModel.LanguageName;
+
+    }
+
     public Language()
     {
     }
