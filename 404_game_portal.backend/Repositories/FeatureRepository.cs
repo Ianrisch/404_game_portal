@@ -1,4 +1,5 @@
 ﻿using _404_game_portal.backend.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace _404_game_portal.backend.Repositories;
 
@@ -20,7 +21,9 @@ public class FeatureRepository : IFeatureRepository
 
     public Feature GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _context.Features
+            .Include(e => e.Games)
+            .SingleOrDefault(e => e.Id == id) ?? new Feature();
     }
 
     public Feature Create(Feature feature)
