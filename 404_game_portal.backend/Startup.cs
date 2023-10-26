@@ -48,5 +48,6 @@ public class Startup
     private void AddRepositories()
     {
         _services.AddScoped<IGameRepository, GameRepository>();
+        _services.AddScoped<ILanguageRepository, LanguageRepository>();
     }
 }
