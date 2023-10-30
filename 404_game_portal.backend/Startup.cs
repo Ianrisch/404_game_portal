@@ -50,5 +50,6 @@ public class Startup
         _services.AddScoped<IGameRepository, GameRepository>();
         _services.AddScoped<ILanguageRepository, LanguageRepository>();
         _services.AddScoped<IFeatureRepository, FeatureRepository>();
+        _services.AddScoped<IPlatformRepository, PlatformRepository>();
     }
 }
