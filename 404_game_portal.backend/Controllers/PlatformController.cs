@@ -33,12 +33,13 @@ public class PlatformController : ControllerBase
     [HttpPost]
     public Platform Create(PlatformCreationViewModel creationViewModel)
     {
-        var platform = new Platform();
-        platform.Games = _gameRepository.GetByIds(creationViewModel.Games);
-        platform.Prices = creationViewModel.Prices;
-        platform.PlatformName = creationViewModel.PlatformName;
-        platform.PlatformVersion = creationViewModel.PlatformVersion;
-        platform.PlatformType = creationViewModel.PlatformType;
+        var platform = new Platform
+        {
+            Games = _gameRepository.GetByIds(creationViewModel.Games),
+            PlatformName = creationViewModel.PlatformName,
+            PlatformVersion = creationViewModel.PlatformVersion,
+            PlatformType = creationViewModel.PlatformType
+        };
         return _platformRepository.Create(platform);
     }
 
