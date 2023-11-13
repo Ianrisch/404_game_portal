@@ -1,4 +1,5 @@
-﻿using _404_game_portal.backend.Repositories;
+﻿using _404_game_portal.backend.Entities;
+using _404_game_portal.backend.Repositories;
 
 namespace _404_game_portal.backend;
 
@@ -51,5 +52,6 @@ public class Startup
         _services.AddScoped<ILanguageRepository, LanguageRepository>();
         _services.AddScoped<IFeatureRepository, FeatureRepository>();
         _services.AddScoped<IPlatformRepository, PlatformRepository>();
+        _services.AddScoped<IPriceOnPlatformRepository, PriceOnPlatformRepository>();
     }
 }
