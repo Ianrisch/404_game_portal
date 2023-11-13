@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _404_game_portal.backend.Controllers;
 
-[Controller, Route("[controller]")]
+[Controller, Route("api/[controller]")]
 public class PricesOnPlatformController : ControllerBase
 {
     private readonly IPriceOnPlatformRepository _priceOnPlatformRepository;

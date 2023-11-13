@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace _404_game_portal.backend.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PlatformController : ControllerBase
 {
     private readonly IPlatformRepository _platformRepository;
