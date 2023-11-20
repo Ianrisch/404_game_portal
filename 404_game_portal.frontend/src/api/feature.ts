@@ -2,10 +2,10 @@ import httpClient from '@/services/httpClient';
 import { Game } from '@/api/game';
 
 export type Feature = {
-  id: String;
+  id: string;
   games: Game[];
-  featureName: String;
-  featureDescription: String;
+  featureName: string;
+  featureDescription: string;
 };
 
 export const fetchFeatures = async (): Promise<Feature[]> => httpClient.get('/api/feature');

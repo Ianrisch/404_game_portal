@@ -24,4 +24,4 @@ export type Game = {
 };
 
 export const fetchGames = async (): Promise<Game[]> => httpClient.get('/api/game');
-export const fetchGame = async (id: string): Promise<Game> => httpClient.get('/api/game/' + id);
+export const fetchGame = async (id: string): Promise<Game> => httpClient.get(`/api/game/${id}`);

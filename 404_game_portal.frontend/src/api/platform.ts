@@ -3,10 +3,10 @@ import { PriceOnPlatform } from '@/api/priceOnPlatform';
 import { Game } from '@/api/game';
 
 export type Platform = {
-  id: String;
+  id: string;
   games: Game[];
   priceOnPlatforms: PriceOnPlatform;
-  platformName: String;
-  platformVersion: String;
-  platformType: String;
+  platformName: string;
+  platformVersion: string;
+  platformType: string;
 };
