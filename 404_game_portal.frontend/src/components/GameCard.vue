@@ -7,18 +7,11 @@ defineProps<{
 }>();
 
 const show = ref(false);
-const featureDescription = (description: String) => alert(description);
 </script>
 
 <template>
-  <!--  <v-card>-->
-  <!--    <v-card-title> </v-card-title>-->
-  <!--    <v-card-text> </v-card-text>-->
-  <!--    <VCardActions> </VCardActions>-->
-  <!--  </v-card>-->
-
-  <v-card class="mx-auto" max-width="344">
-    <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" cover></v-img>
+  <v-card class="mx-auto" max-width="500">
+    <v-img :src="game.image" height="200px" cover />
 
     <v-card-title> {{ game.name }} </v-card-title>
 
@@ -28,14 +21,14 @@ const featureDescription = (description: String) => alert(description);
       <!--      <v-btn color="orange-lighten-2" variant="text"> Explore </v-btn>-->
       <VBtn @click="$router.push(`/game/${game.id}`)">Mehr</VBtn>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
-      <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
+      <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show" />
     </v-card-actions>
 
     <v-expand-transition>
       <div v-show="show">
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-text>
           <div>
@@ -43,14 +36,20 @@ const featureDescription = (description: String) => alert(description);
           </div>
           <div>Release Date: {{ game.releaseDate.toLocaleString() }}</div>
           <v-chip-group>
-            <v-chip v-for="priceOnPlatform in game.prices"> {{ priceOnPlatform.price }},-€ </v-chip>
+            <v-chip
+              v-for="priceOnPlatform in game.prices"
+              :key="priceOnPlatform.id"
+              :ripple="false"
+            >
+              {{ priceOnPlatform.price.toFixed(2).replace('.', ',') }}-€
+            </v-chip>
           </v-chip-group>
           <v-chip-group>
-            <v-chip
-              v-for="feature in game.features"
-              @click="featureDescription(feature.featureDescription)"
-            >
+            <v-chip v-for="feature in game.features" :key="feature.featureName" :ripple="false">
               {{ feature.featureName }}
+              <v-tooltip activator="parent" location="top">
+                {{ feature.featureDescription }}
+              </v-tooltip>
             </v-chip>
           </v-chip-group>
         </v-card-text>
