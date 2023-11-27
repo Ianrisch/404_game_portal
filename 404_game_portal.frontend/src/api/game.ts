@@ -2,6 +2,7 @@ import httpClient from '@/services/httpClient';
 import { PriceOnPlatform } from '@/api/priceOnPlatform';
 import { Feature } from '@/api/feature';
 import { Platform } from '@/api/platform';
+import { Language } from '@/api/language';
 
 export enum USK {
   USK0,
@@ -21,6 +22,7 @@ export type Game = {
   releaseDate: Date;
   platforms: Platform[];
   features: Feature[];
+  languages: Language[];
 };
 
 export const fetchGames = async (): Promise<Game[]> => httpClient.get('/api/game');

@@ -4,6 +4,7 @@ import { USK } from '@/api/game';
 import { ref } from 'vue';
 defineProps<{
   game: Game;
+  showImage?: boolean;
 }>();
 
 const show = ref(false);
@@ -11,15 +12,12 @@ const show = ref(false);
 
 <template>
   <v-card class="mx-auto" max-width="500">
-    <v-img :src="game.image" height="200px" cover />
+    <v-img v-if="showImage" :src="game.image" height="200px" cover />
 
     <v-card-title> {{ game.name }} </v-card-title>
 
-    <v-card-subtitle> {{ game.description }} </v-card-subtitle>
-
     <v-card-actions>
-      <!--      <v-btn color="orange-lighten-2" variant="text"> Explore </v-btn>-->
-      <VBtn @click="$router.push(`/game/${game.id}`)">Mehr</VBtn>
+      <VBtn color="purple" @click="$router.push(`/game/${game.id}`)">Mehr</VBtn>
 
       <v-spacer />
 
@@ -41,7 +39,8 @@ const show = ref(false);
               :key="priceOnPlatform.id"
               :ripple="false"
             >
-              {{ priceOnPlatform.price.toFixed(2).replace('.', ',') }}-€
+              {{ priceOnPlatform.price.toFixed(2).replace('.', ',') }}-€ -
+              {{ priceOnPlatform.platform.platformName }}
             </v-chip>
           </v-chip-group>
           <v-chip-group>
@@ -50,6 +49,11 @@ const show = ref(false);
               <v-tooltip activator="parent" location="top">
                 {{ feature.featureDescription }}
               </v-tooltip>
+            </v-chip>
+          </v-chip-group>
+          <v-chip-group>
+            <v-chip v-for="language in game.languages" :key="language.id" :ripple="false">
+              {{ language.languageName }}
             </v-chip>
           </v-chip-group>
         </v-card-text>

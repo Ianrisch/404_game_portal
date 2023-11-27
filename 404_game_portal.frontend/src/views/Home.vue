@@ -1,7 +1,7 @@
 <template>
   <VList :loading="loading">
     <template v-if="result">
-      <GameCard v-for="game in result" :key="game.id" :game="game" />
+      <GameCard v-for="game in result" :key="game.id" :game="game" show-image />
     </template>
   </VList>
 </template>
