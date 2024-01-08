@@ -11,14 +11,14 @@ public class Platform
     public string PlatformVersion { get; set; }
     public string PlatformType { get; set; }
 
-    public Platform(PlatformViewModel creationViewModel)
+    public Platform(PlatformAndPriceViewModel creationAndPriceViewModel)
     {
-        if (creationViewModel.Id is not null)
-            Id = (Guid)creationViewModel.Id;
+        if (creationAndPriceViewModel.Id is not null)
+            Id = (Guid)creationAndPriceViewModel.Id;
 
-        PlatformName = creationViewModel.PlatformName;
-        PlatformVersion = creationViewModel.PlatformVersion;
-        PlatformType = creationViewModel.PlatformType;
+        PlatformName = creationAndPriceViewModel.PlatformName;
+        PlatformVersion = creationAndPriceViewModel.PlatformVersion;
+        PlatformType = creationAndPriceViewModel.PlatformType;
     }
 
     public Platform()

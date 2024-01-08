@@ -17,20 +17,20 @@ public class GameController : ControllerBase
     }
 
     [HttpGet]
-    public List<Game> GetAll()
+    public List<GameViewModel> GetAll()
     {
-        return _gameRepository.GetAll();
+        return _gameRepository.GetAll().Select(game => new GameViewModel(game)).ToList();
     }
 
     [HttpPost]
-    public Game Create(GameCreationViewModel creationViewModel)
+    public GameViewModel Create(GameCreationViewModel creationViewModel)
     {
-        return _gameRepository.Create(creationViewModel);
+        return new GameViewModel(_gameRepository.Create(creationViewModel));
     }
 
     [HttpGet("{id:guid}")]
-    public Game GetById(Guid id)
+    public GameViewModel GetById(Guid id)
     {
-        return _gameRepository.GetById(id);
+        return new GameViewModel(_gameRepository.GetById(id));
     }
 }
