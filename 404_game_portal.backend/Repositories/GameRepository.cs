@@ -26,9 +26,9 @@ public class GameRepository : IGameRepository
     public Game GetById(Guid id)
     {
         return _context.Games
-            .Include(e => e.GamePlatforms)
-            .Include(e => e.GameFeatures)
-            .Include(e => e.GameLanguages)
+            .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
+            .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
+            .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
             .SingleOrDefault(e => e.Id == id) ?? new Game();
     }
 
@@ -39,7 +39,8 @@ public class GameRepository : IGameRepository
         _context.SaveChanges();
         game.GamePlatforms = creationViewModel.Platforms.Select(id => new GamePlatform { PlatformId = id }).ToList();
         game.GameFeatures = creationViewModel.Features?.Select(id => new GameFeature { FeatureId = id }).ToList() ?? [];
-        game.GameLanguages = creationViewModel.Languages.Select(languageId => new GameLanguage { LanguageId = languageId }).ToList();
+        game.GameLanguages = creationViewModel.Languages
+            .Select(languageId => new GameLanguage { LanguageId = languageId }).ToList();
         _context.SaveChanges();
         return game;
     }
@@ -47,9 +48,9 @@ public class GameRepository : IGameRepository
     public List<Game> GetAll()
     {
         return _context.Games
-            .Include(e => e.GamePlatforms)
-            .Include(e => e.GameFeatures)
-            .Include(e => e.GameLanguages)
+            .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
+            .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
+            .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
             .ToList();
     }
 

@@ -6,7 +6,7 @@ public class GameViewModel
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public List<PlatformAndPriceViewModel> Platforms { get; set; }
+    public List<PlatformAndPriceViewModel> PlatformAndPrices { get; set; }
     public Usk USK { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public string Description { get; set; }
@@ -22,7 +22,7 @@ public class GameViewModel
         Description = game.Description;
         Features = game.GameFeatures.Select(gf => new FeatureViewModel(gf.Feature)).ToList();
         Languages = game.GameLanguages.Select(gl => new LanguageViewModel(gl.Language)).ToList();
-        Platforms = game.GamePlatforms.Select(gp => new PlatformAndPriceViewModel(gp)).ToList();
+        PlatformAndPrices = game.GamePlatforms.Select(gp => new PlatformAndPriceViewModel(gp)).ToList();
     }
 
     public GameViewModel()

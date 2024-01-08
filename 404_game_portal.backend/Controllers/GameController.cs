@@ -1,5 +1,4 @@
-﻿using _404_game_portal.backend.Entities;
-using _404_game_portal.backend.Repositories;
+﻿using _404_game_portal.backend.Repositories;
 using _404_game_portal.backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 

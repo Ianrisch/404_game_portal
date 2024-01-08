@@ -1,5 +1,4 @@
 import httpClient from '@/services/httpClient';
-import { PriceOnPlatform } from '@/api/priceOnPlatform';
 import { Feature } from '@/api/feature';
 import { PlatformAndPrice } from '@/api/platformAndPrice';
 import { Language } from '@/api/language';
