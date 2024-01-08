@@ -35,12 +35,11 @@ public class PlatformController : ControllerBase
     {
         var platform = new Platform
         {
-            Games = _gameRepository.GetByIds(creationViewModel.Games),
+            GamePlatforms = creationViewModel.Games.Select(id => new GamePlatform { GameId = id }).ToList(),
             PlatformName = creationViewModel.PlatformName,
             PlatformVersion = creationViewModel.PlatformVersion,
             PlatformType = creationViewModel.PlatformType
         };
         return _platformRepository.Create(platform);
     }
-
 }

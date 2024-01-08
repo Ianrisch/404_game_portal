@@ -1,5 +1,6 @@
 using _404_game_portal.backend.Entities;
 using _404_game_portal.backend.Extensions;
+using _404_game_portal.backend.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace _404_game_portal.backend.Repositories;
@@ -8,7 +9,7 @@ public interface IGameRepository
 {
     public Game GetById(Guid id);
 
-    public Game Create(Game game);
+    public Game Create(GameCreationViewModel game);
     public List<Game> GetAll();
     List<Game> GetByIds(List<Guid> games, bool includeAll = false);
 }
@@ -25,16 +26,20 @@ public class GameRepository : IGameRepository
     public Game GetById(Guid id)
     {
         return _context.Games
-            .Include(e => e.Platforms)
-            .Include(e => e.Prices)
-            .Include(e => e.Features)
-            .Include(e => e.Languages)
+            .Include(e => e.GamePlatforms)
+            .Include(e => e.GameFeatures)
+            .Include(e => e.GameLanguages)
             .SingleOrDefault(e => e.Id == id) ?? new Game();
     }
 
-    public Game Create(Game game)
+    public Game Create(GameCreationViewModel creationViewModel)
     {
+        var game = new Game(creationViewModel);
         _context.Games.Add(game);
+        _context.SaveChanges();
+        game.GamePlatforms = creationViewModel.Platforms.Select(id => new GamePlatform { PlatformId = id }).ToList();
+        game.GameFeatures = creationViewModel.Features?.Select(id => new GameFeature { FeatureId = id }).ToList() ?? [];
+        game.GameLanguages = creationViewModel.Languages.Select(languageId => new GameLanguage { LanguageId = languageId }).ToList();
         _context.SaveChanges();
         return game;
     }
@@ -42,20 +47,18 @@ public class GameRepository : IGameRepository
     public List<Game> GetAll()
     {
         return _context.Games
-            .Include(e => e.Platforms)
-            .Include(e => e.Prices)
-            .Include(e => e.Features)
-            .Include(e => e.Languages)
+            .Include(e => e.GamePlatforms)
+            .Include(e => e.GameFeatures)
+            .Include(e => e.GameLanguages)
             .ToList();
     }
 
     public List<Game> GetByIds(List<Guid> games, bool includeAll = false)
     {
         return _context.Games
-            .IncludeIf(includeAll,e => e.Platforms)
-            .IncludeIf(includeAll,e => e.Prices)
-            .IncludeIf(includeAll,e => e.Features)
-            .IncludeIf(includeAll,e => e.Languages)
+            .IncludeIf(includeAll, e => e.GamePlatforms)
+            .IncludeIf(includeAll, e => e.GameFeatures)
+            .IncludeIf(includeAll, e => e.GameLanguages)
             .Where(e => games.Contains(e.Id)).ToList();
     }
 }

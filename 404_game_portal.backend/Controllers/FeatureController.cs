@@ -34,10 +34,6 @@ public class FeatureController : ControllerBase
     [HttpPost]
     public Feature Create(FeatureCreationViewModel creationViewModel)
     {
-        var feature = new Feature();
-        feature.Games = _gameRepository.GetByIds(creationViewModel.Games);
-        feature.FeatureName = creationViewModel.FeatureName;
-        feature.FeatureDescription = creationViewModel.FeatureDescription;
-        return _featureRepository.Create(feature);
+        return _featureRepository.Create(creationViewModel);
     }
 }

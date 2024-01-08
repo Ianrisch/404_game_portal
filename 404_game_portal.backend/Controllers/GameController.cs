@@ -25,8 +25,7 @@ public class GameController : ControllerBase
     [HttpPost]
     public Game Create(GameCreationViewModel creationViewModel)
     {
-        var game = new Game(creationViewModel);
-        return _gameRepository.Create(game);
+        return _gameRepository.Create(creationViewModel);
     }
 
     [HttpGet("{id:guid}")]

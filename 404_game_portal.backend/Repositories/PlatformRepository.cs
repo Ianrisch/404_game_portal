@@ -22,8 +22,7 @@ public class PlatformRepository : IPlatformRepository
     public Platform GetById(Guid id)
     {
         return _context.Platforms
-            .Include(e => e.Games)
-            .Include(e => e.Prices)
+            .Include(e => e.GamePlatforms)
             .SingleOrDefault(e => e.Id == id) ?? new Platform();
     }
 
@@ -37,8 +36,7 @@ public class PlatformRepository : IPlatformRepository
     public List<Platform> GetAll()
     {
         return _context.Platforms
-            .Include(e => e.Games)
-            .Include(e => e.Prices)
+            .Include(e => e.GamePlatforms)
             .ToList();
 
     }

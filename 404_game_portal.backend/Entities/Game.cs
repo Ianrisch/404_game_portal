@@ -7,23 +7,19 @@ public class Game
     public Guid Id { get; set; }
 
     public string Name { get; set; }
-    public List<Platform> Platforms { get; set; }
-    public USK USK { get; set; }
-    public List<PriceOnPlatform> Prices { get; set; }
+    public List<GamePlatform> GamePlatforms { get; set; }
+    public Usk USK { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public string Description { get; set; }
-    public List<Feature> Features { get; set; }
-    public List<Language> Languages { get; set; }
+    public List<GameFeature> GameFeatures { get; set; }
+    public List<GameLanguage> GameLanguages { get; set; }
 
     public Game(GameCreationViewModel creationViewModel)
     {
         Name = creationViewModel.Name;
-        Platforms = creationViewModel.Platforms.Select(platform => new Platform(platform)).ToList();
         USK = creationViewModel.USK;
         ReleaseDate = creationViewModel.ReleaseDate;
         Description = creationViewModel.Description;
-        Features = creationViewModel.Features ?? new List<Feature>();
-        Languages = creationViewModel.Languages.Select(language => new Language(language)).ToList();
     }
 
     public Game()

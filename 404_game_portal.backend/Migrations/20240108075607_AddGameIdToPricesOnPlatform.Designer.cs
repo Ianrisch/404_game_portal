@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _404_game_portal.backend;
 
@@ -10,14 +11,61 @@ using _404_game_portal.backend;
 namespace _404_game_portal.backend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240108075607_AddGameIdToPricesOnPlatform")]
+    partial class AddGameIdToPricesOnPlatform
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("FeatureGame", b =>
+                {
+                    b.Property<Guid>("FeaturesId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("GamesId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("FeaturesId", "GamesId");
+
+                    b.HasIndex("GamesId");
+
+                    b.ToTable("FeatureGame");
+                });
+
+            modelBuilder.Entity("GameLanguage", b =>
+                {
+                    b.Property<Guid>("GamesId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("LanguagesId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("GamesId", "LanguagesId");
+
+                    b.HasIndex("LanguagesId");
+
+                    b.ToTable("GameLanguage");
+                });
+
+            modelBuilder.Entity("GamePlatform", b =>
+                {
+                    b.Property<Guid>("GamesId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("PlatformsId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("GamesId", "PlatformsId");
+
+                    b.HasIndex("PlatformsId");
+
+                    b.ToTable("GamePlatform");
+                });
 
             modelBuilder.Entity("_404_game_portal.backend.Entities.Feature", b =>
                 {
@@ -63,54 +111,6 @@ namespace _404_game_portal.backend.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("_404_game_portal.backend.Entities.GameFeature", b =>
-                {
-                    b.Property<Guid>("GameId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("FeatureId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("GameId", "FeatureId");
-
-                    b.HasIndex("FeatureId");
-
-                    b.ToTable("GameFeatures");
-                });
-
-            modelBuilder.Entity("_404_game_portal.backend.Entities.GameLanguage", b =>
-                {
-                    b.Property<Guid>("GameId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("LanguageId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("GameId", "LanguageId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.ToTable("GameLanguages");
-                });
-
-            modelBuilder.Entity("_404_game_portal.backend.Entities.GamePlatform", b =>
-                {
-                    b.Property<Guid>("GameId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("PlatformId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
-
-                    b.HasKey("GameId", "PlatformId");
-
-                    b.HasIndex("PlatformId");
-
-                    b.ToTable("GamePlatforms");
-                });
-
             modelBuilder.Entity("_404_game_portal.backend.Entities.Language", b =>
                 {
                     b.Property<Guid>("Id")
@@ -149,54 +149,85 @@ namespace _404_game_portal.backend.Migrations
                     b.ToTable("Platforms");
                 });
 
-            modelBuilder.Entity("_404_game_portal.backend.Entities.GameFeature", b =>
+            modelBuilder.Entity("_404_game_portal.backend.Entities.PriceOnPlatform", b =>
                 {
-                    b.HasOne("_404_game_portal.backend.Entities.Feature", "Feature")
-                        .WithMany("GameFeatures")
-                        .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
 
-                    b.HasOne("_404_game_portal.backend.Entities.Game", "Game")
-                        .WithMany("GameFeatures")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("char(36)");
 
-                    b.Navigation("Feature");
+                    b.Property<Guid>("PlatformId")
+                        .HasColumnType("char(36)");
 
-                    b.Navigation("Game");
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("PricesOnPlatform");
                 });
 
-            modelBuilder.Entity("_404_game_portal.backend.Entities.GameLanguage", b =>
+            modelBuilder.Entity("FeatureGame", b =>
                 {
-                    b.HasOne("_404_game_portal.backend.Entities.Game", "Game")
-                        .WithMany("GameLanguages")
-                        .HasForeignKey("GameId")
+                    b.HasOne("_404_game_portal.backend.Entities.Feature", null)
+                        .WithMany()
+                        .HasForeignKey("FeaturesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("_404_game_portal.backend.Entities.Language", "Language")
-                        .WithMany("GameLanguages")
-                        .HasForeignKey("LanguageId")
+                    b.HasOne("_404_game_portal.backend.Entities.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Language");
                 });
 
-            modelBuilder.Entity("_404_game_portal.backend.Entities.GamePlatform", b =>
+            modelBuilder.Entity("GameLanguage", b =>
+                {
+                    b.HasOne("_404_game_portal.backend.Entities.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("_404_game_portal.backend.Entities.Language", null)
+                        .WithMany()
+                        .HasForeignKey("LanguagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GamePlatform", b =>
+                {
+                    b.HasOne("_404_game_portal.backend.Entities.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("_404_game_portal.backend.Entities.Platform", null)
+                        .WithMany()
+                        .HasForeignKey("PlatformsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("_404_game_portal.backend.Entities.PriceOnPlatform", b =>
                 {
                     b.HasOne("_404_game_portal.backend.Entities.Game", "Game")
-                        .WithMany("GamePlatforms")
+                        .WithMany("Prices")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("_404_game_portal.backend.Entities.Platform", "Platform")
-                        .WithMany("GamePlatforms")
+                        .WithMany("Prices")
                         .HasForeignKey("PlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -206,28 +237,14 @@ namespace _404_game_portal.backend.Migrations
                     b.Navigation("Platform");
                 });
 
-            modelBuilder.Entity("_404_game_portal.backend.Entities.Feature", b =>
-                {
-                    b.Navigation("GameFeatures");
-                });
-
             modelBuilder.Entity("_404_game_portal.backend.Entities.Game", b =>
                 {
-                    b.Navigation("GameFeatures");
-
-                    b.Navigation("GameLanguages");
-
-                    b.Navigation("GamePlatforms");
-                });
-
-            modelBuilder.Entity("_404_game_portal.backend.Entities.Language", b =>
-                {
-                    b.Navigation("GameLanguages");
+                    b.Navigation("Prices");
                 });
 
             modelBuilder.Entity("_404_game_portal.backend.Entities.Platform", b =>
                 {
-                    b.Navigation("GamePlatforms");
+                    b.Navigation("Prices");
                 });
 #pragma warning restore 612, 618
         }

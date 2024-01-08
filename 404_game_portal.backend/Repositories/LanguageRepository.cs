@@ -22,7 +22,7 @@ public class LanguageRepository : ILanguageRepository
     public Language GetById(Guid id)
     {
         return _context.Languages
-            .Include(e => e.Games)
+            .Include(e => e.GameLanguages)
             .SingleOrDefault(e => e.Id == id) ?? new Language();
     }
 
@@ -35,6 +35,6 @@ public class LanguageRepository : ILanguageRepository
 
     public List<Language> GetAll()
     {
-        return _context.Languages.Include(e => e.Games).ToList();
+        return _context.Languages.Include(e => e.GameLanguages).ToList();
     }
 }

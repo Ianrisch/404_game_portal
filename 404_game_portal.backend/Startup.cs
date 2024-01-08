@@ -1,5 +1,4 @@
-﻿using _404_game_portal.backend.Entities;
-using _404_game_portal.backend.Repositories;
+﻿using _404_game_portal.backend.Repositories;
 
 namespace _404_game_portal.backend;
 
@@ -16,17 +15,17 @@ public class Startup
     {
         AddServices();
     }
-    
+
     private void AddServices()
     {
-        _services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+        _services.AddControllers().AddNewtonsoftJson(x =>
+            x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         _services.AddEndpointsApiExplorer();
         _services.AddSwaggerGen();
         AddCustomDbContext();
         AddCustomCors();
         AddRepositories();
     }
-
 
 
     private void AddCustomDbContext()
@@ -42,8 +41,8 @@ public class Startup
         _services.AddCors(options =>
         {
             options.AddPolicy(name: "MyAllowSpecificOrigins",
-                corsPolicyBuilder => { corsPolicyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();  });
-        });  
+                corsPolicyBuilder => { corsPolicyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
+        });
     }
 
     private void AddRepositories()
@@ -52,6 +51,5 @@ public class Startup
         _services.AddScoped<ILanguageRepository, LanguageRepository>();
         _services.AddScoped<IFeatureRepository, FeatureRepository>();
         _services.AddScoped<IPlatformRepository, PlatformRepository>();
-        _services.AddScoped<IPriceOnPlatformRepository, PriceOnPlatformRepository>();
     }
 }

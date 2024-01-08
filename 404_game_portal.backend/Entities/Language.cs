@@ -6,7 +6,7 @@ public class Language
 {
     public Guid Id { get; set; }
 
-    public List<Game> Games { get; set; }
+    public List<GameLanguage> GameLanguages { get; set; }
     public string LanguageName { get; set; }
 
     public Language(LanguageViewModel languageViewModel)

@@ -35,7 +35,8 @@ public class LanguageController : ControllerBase
     {
         var language = new Language();
         if (creationViewModel.Games is not null)
-            language.Games = _gameRepository.GetByIds(creationViewModel.Games);
+            language.GameLanguages =
+                creationViewModel.Games.Select(gameId => new GameLanguage { GameId = gameId }).ToList();
         language.LanguageName = creationViewModel.LanguageName;
         return _languageRepository.Create(language);
     }
