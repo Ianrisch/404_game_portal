@@ -34,12 +34,12 @@ watch(
         <div>Release Date: {{ result!.releaseDate.toLocaleString() }}</div>
         <v-chip-group>
           <v-chip
-            v-for="priceOnPlatform in result!.prices"
-            :key="priceOnPlatform.id"
+            v-for="platformAndPrice in result!.platformAndPrices"
+            :key="platformAndPrice.id"
             :ripple="false"
           >
-            {{ priceOnPlatform.price.toFixed(2).replace('.', ',') }}-€ -
-            {{ priceOnPlatform.platform.platformName }}
+            {{ platformAndPrice.price.toFixed(2).replace('.', ',') }}-€ -
+            {{ platformAndPrice.platformName }}
           </v-chip>
         </v-chip-group>
         <v-chip-group>

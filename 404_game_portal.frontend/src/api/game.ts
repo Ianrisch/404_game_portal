@@ -1,7 +1,7 @@
 import httpClient from '@/services/httpClient';
 import { PriceOnPlatform } from '@/api/priceOnPlatform';
 import { Feature } from '@/api/feature';
-import { Platform } from '@/api/platform';
+import { PlatformAndPrice } from '@/api/platformAndPrice';
 import { Language } from '@/api/language';
 
 export enum USK {
@@ -18,9 +18,8 @@ export type Game = {
   usk: USK;
   image: string;
   rating: number;
-  prices: PriceOnPlatform[];
   releaseDate: Date;
-  platforms: Platform[];
+  platformAndPrices: PlatformAndPrice[];
   features: Feature[];
   languages: Language[];
 };

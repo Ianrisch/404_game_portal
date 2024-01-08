@@ -35,12 +35,12 @@ const show = ref(false);
           <div>Release Date: {{ game.releaseDate.toLocaleString() }}</div>
           <v-chip-group>
             <v-chip
-              v-for="priceOnPlatform in game.prices"
-              :key="priceOnPlatform.id"
+              v-for="platformAndPrice in game.platformAndPrices"
+              :key="platformAndPrice.id"
               :ripple="false"
             >
-              {{ priceOnPlatform.price.toFixed(2).replace('.', ',') }}-€ -
-              {{ priceOnPlatform.platform.platformName }}
+              {{ platformAndPrice.price.toFixed(2).replace('.', ',') }}-€ -
+              {{ platformAndPrice.platformName }}
             </v-chip>
           </v-chip-group>
           <v-chip-group>

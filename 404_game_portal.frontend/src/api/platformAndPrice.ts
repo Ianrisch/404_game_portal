@@ -1,11 +1,10 @@
 import httpClient from '@/services/httpClient';
-import { PriceOnPlatform } from '@/api/priceOnPlatform';
 import { Game } from '@/api/game';
 
-export type Platform = {
+export type PlatformAndPrice = {
   id: string;
   games: Game[];
-  priceOnPlatforms: PriceOnPlatform;
+  price: number;
   platformName: string;
   platformVersion: string;
   platformType: string;
