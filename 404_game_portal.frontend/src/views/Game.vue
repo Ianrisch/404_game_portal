@@ -25,7 +25,9 @@ watch(
         <v-icon icon="mdi-arrow-left" />
       </v-btn>
     </VCardItem>
-    <VCardItem> <img :src="result!.image" alt="test" /> </VCardItem>
+    <VCardItem>
+      <img :src="result!.image ?? 'https://picsum.photos/1000/?random=' + result.id" alt="test" />
+    </VCardItem>
     <div>
       <VCardTitle>{{ result!.name }}</VCardTitle>
       <VCardText>{{ result!.description }}</VCardText>

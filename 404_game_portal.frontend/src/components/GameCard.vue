@@ -2,6 +2,7 @@
 import type { Game } from '@/api/game';
 import { USK } from '@/api/game';
 import { ref } from 'vue';
+
 defineProps<{
   game: Game;
   showImage?: boolean;
@@ -12,9 +13,14 @@ const show = ref(false);
 
 <template>
   <v-card class="mx-auto" max-width="500">
-    <v-img v-if="showImage" :src="game.image" height="200px" cover />
+    <v-img
+      v-if="showImage"
+      :src="game.image ?? 'https://picsum.photos/1000?random=' + game.id"
+      height="200px"
+      cover
+    />
 
-    <v-card-title> {{ game.name }} </v-card-title>
+    <v-card-title> {{ game.name }}</v-card-title>
 
     <v-card-actions>
       <VBtn color="purple" @click="$router.push(`/game/${game.id}`)">Mehr</VBtn>
