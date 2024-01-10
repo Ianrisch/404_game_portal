@@ -34,13 +34,20 @@ public class GameRepository : IGameRepository
 
     public Game Create(GameCreationViewModel creationViewModel)
     {
-        var game = new Game(creationViewModel);
+        var game = new Game(creationViewModel)
+        {
+            GamePlatforms = creationViewModel.Platforms.Select(priceAndPlatformViewModel => new GamePlatform
+                {
+                    PlatformId = priceAndPlatformViewModel.PlatformId,
+                    Price = priceAndPlatformViewModel.Price
+                })
+                .ToList(),
+            GameFeatures = creationViewModel.Features?.Select(id => new GameFeature { FeatureId = id }).ToList() ?? [],
+            GameLanguages = creationViewModel.Languages
+                .Select(languageId => new GameLanguage { LanguageId = languageId }).ToList()
+        };
+
         _context.Games.Add(game);
-        _context.SaveChanges();
-        game.GamePlatforms = creationViewModel.Platforms.Select(id => new GamePlatform { PlatformId = id }).ToList();
-        game.GameFeatures = creationViewModel.Features?.Select(id => new GameFeature { FeatureId = id }).ToList() ?? [];
-        game.GameLanguages = creationViewModel.Languages
-            .Select(languageId => new GameLanguage { LanguageId = languageId }).ToList();
         _context.SaveChanges();
         return game;
     }

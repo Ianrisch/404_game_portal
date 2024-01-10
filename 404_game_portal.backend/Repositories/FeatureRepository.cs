@@ -33,10 +33,10 @@ public class FeatureRepository : IFeatureRepository
         {
             FeatureName = creationViewModel.FeatureName,
             FeatureDescription = creationViewModel.FeatureDescription,
+            GameFeatures = creationViewModel.Games.Select(id => new GameFeature { GameId = id }).ToList()
         };
+
         _context.Features.Add(feature);
-        _context.SaveChanges();
-        feature.GameFeatures = creationViewModel.Games.Select(id => new GameFeature { GameId = id }).ToList();
         _context.SaveChanges();
         return feature;
     }

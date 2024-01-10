@@ -10,12 +10,10 @@ namespace _404_game_portal.backend.Controllers;
 public class LanguageController : ControllerBase
 {
     private readonly ILanguageRepository _languageRepository;
-    private readonly IGameRepository _gameRepository;
 
-    public LanguageController(ILanguageRepository languageRepository, IGameRepository gameRepository)
+    public LanguageController(ILanguageRepository languageRepository)
     {
         _languageRepository = languageRepository;
-        _gameRepository = gameRepository;
     }
 
     [HttpGet]
@@ -33,11 +31,6 @@ public class LanguageController : ControllerBase
     [HttpPost]
     public Language Create(LanguageCreationViewModel creationViewModel)
     {
-        var language = new Language();
-        if (creationViewModel.Games is not null)
-            language.GameLanguages =
-                creationViewModel.Games.Select(gameId => new GameLanguage { GameId = gameId }).ToList();
-        language.LanguageName = creationViewModel.LanguageName;
-        return _languageRepository.Create(language);
+        return _languageRepository.Create(creationViewModel);
     }
 }

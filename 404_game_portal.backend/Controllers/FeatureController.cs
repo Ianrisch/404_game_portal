@@ -10,13 +10,11 @@ namespace _404_game_portal.backend.Controllers;
 public class FeatureController : ControllerBase
 {
     private readonly IFeatureRepository _featureRepository;
-    private readonly IGameRepository _gameRepository;
 
 
-    public FeatureController(IFeatureRepository featureRepository, IGameRepository gameRepository)
+    public FeatureController(IFeatureRepository featureRepository)
     {
         _featureRepository = featureRepository;
-        _gameRepository = gameRepository;
     }
 
     [HttpGet]
