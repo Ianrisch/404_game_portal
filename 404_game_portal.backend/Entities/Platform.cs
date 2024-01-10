@@ -4,7 +4,7 @@ namespace _404_game_portal.backend.Entities;
 
 public class Platform
 {
-    public Guid Id  { get; set; }
+    public Guid Id { get; set; }
 
     public List<GamePlatform> GamePlatforms { get; set; }
     public string PlatformName { get; set; }

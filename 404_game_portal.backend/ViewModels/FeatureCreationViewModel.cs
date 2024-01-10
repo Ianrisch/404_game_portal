@@ -3,7 +3,7 @@
 public class FeatureCreationViewModel
 {
     public List<Guid> Games { get; set; }
-    
+
     public string FeatureName { get; set; }
     public string FeatureDescription { get; set; }
 }

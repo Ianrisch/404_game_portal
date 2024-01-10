@@ -4,7 +4,7 @@ namespace _404_game_portal.backend.Entities;
 
 public class Feature
 {
-    public Guid Id  { get; set; }
+    public Guid Id { get; set; }
     public List<GameFeature> GameFeatures { get; set; }
 
     public string FeatureName { get; set; }
