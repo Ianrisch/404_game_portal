@@ -42,14 +42,15 @@ public class GameRepository : IGameRepository
                     Price = priceAndPlatformViewModel.Price
                 })
                 .ToList(),
-            GameFeatures = creationViewModel.Features?.Select(id => new GameFeature { FeatureId = id }).ToList() ?? [],
+            GameFeatures = creationViewModel.Features.Select(id => new GameFeature { FeatureId = id }).ToList(),
             GameLanguages = creationViewModel.Languages
                 .Select(languageId => new GameLanguage { LanguageId = languageId }).ToList()
         };
 
         _context.Games.Add(game);
         _context.SaveChanges();
-        return game;
+        
+        return GetById(game.Id);
     }
 
     public List<Game> GetAll()
@@ -67,6 +68,7 @@ public class GameRepository : IGameRepository
             .IncludeIf(includeAll, e => e.GamePlatforms)
             .IncludeIf(includeAll, e => e.GameFeatures)
             .IncludeIf(includeAll, e => e.GameLanguages)
-            .Where(e => games.Contains(e.Id)).ToList();
+            .Where(e => games.Contains(e.Id))
+            .ToList();
     }
 }
