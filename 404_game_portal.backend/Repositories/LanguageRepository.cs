@@ -36,7 +36,7 @@ public class LanguageRepository : ILanguageRepository
         };
         _context.Languages.Add(language);
         _context.SaveChanges();
-        return language;
+        return GetById(language.Id);
     }
 
     public List<Language> GetAll()

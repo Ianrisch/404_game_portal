@@ -43,7 +43,7 @@ public class PlatformRepository : IPlatformRepository
 
         _context.Platforms.Add(platform);
         _context.SaveChanges();
-        return platform;
+        return GetById(platform.Id);
     }
 
     public List<Platform> GetAll()

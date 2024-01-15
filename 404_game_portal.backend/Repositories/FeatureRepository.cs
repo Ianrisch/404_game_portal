@@ -38,7 +38,7 @@ public class FeatureRepository : IFeatureRepository
 
         _context.Features.Add(feature);
         _context.SaveChanges();
-        return feature;
+        return GetById(feature.Id);
     }
 
     public List<Feature> GetAll()
