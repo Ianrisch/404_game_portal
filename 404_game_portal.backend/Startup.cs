@@ -1,4 +1,6 @@
 ﻿using _404_game_portal.backend.Repositories;
+using _404_game_portal.backend.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace _404_game_portal.backend;
 
@@ -21,6 +23,9 @@ public class Startup
 
     private void AddServices()
     {
+        _services.AddScoped<IAuthService, AuthService>();
+
+        _services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         _services.AddControllers().AddNewtonsoftJson(x =>
             x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         _services.AddEndpointsApiExplorer();
@@ -51,5 +56,6 @@ public class Startup
         _services.AddScoped<ILanguageRepository, LanguageRepository>();
         _services.AddScoped<IFeatureRepository, FeatureRepository>();
         _services.AddScoped<IPlatformRepository, PlatformRepository>();
+        _services.AddScoped<IUserRepository, UserRepository>();
     }
 }

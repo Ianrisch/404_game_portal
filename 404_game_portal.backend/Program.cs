@@ -19,6 +19,7 @@ app.UseStaticFiles();
 
 app.UseCors("MyAllowSpecificOrigins");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
