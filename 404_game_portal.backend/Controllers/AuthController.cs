@@ -39,7 +39,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
+    [HttpGet("logout")]
     public async Task<ActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
