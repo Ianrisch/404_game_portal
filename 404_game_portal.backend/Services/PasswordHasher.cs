@@ -5,6 +5,7 @@ namespace _404_game_portal.backend.Services;
 public class PasswordHasher
 {
     private static string _hashIdentifier = "$MYHASH$V1$";
+    private static HashAlgorithmName _hashAlgorithmName = HashAlgorithmName.SHA256;
 
     /// <summary>
     /// Size of salt.
@@ -27,7 +28,7 @@ public class PasswordHasher
         byte[] salt;
         new RNGCryptoServiceProvider().GetBytes(salt = new byte[SaltSize]);
 
-        var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, HashAlgorithmName.SHA3_512);
+        var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, _hashAlgorithmName);
         var hash = pbkdf2.GetBytes(HashSize);
 
         var hashBytes = new byte[SaltSize + HashSize];
@@ -81,13 +82,13 @@ public class PasswordHasher
         var salt = new byte[SaltSize];
         Array.Copy(hashBytes, 0, salt, 0, SaltSize);
 
-        var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, HashAlgorithmName.SHA3_512);
+        var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, _hashAlgorithmName);
         var hash = pbkdf2.GetBytes(HashSize);
 
         return IsHashMatch(hashBytes, hash);
     }
 
-    private static bool IsHashMatch(IReadOnlyList<byte> hashBytes, IReadOnlyList<byte> hash)
+    private static bool IsHashMatch(byte[] hashBytes, byte[] hash)
     {
         for (var i = 0; i < HashSize; i++)
         {
