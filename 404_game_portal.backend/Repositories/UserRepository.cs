@@ -1,18 +1,24 @@
+using _404_game_portal.backend.Entities;
+using Microsoft.EntityFrameworkCore;
+
 namespace _404_game_portal.backend.Repositories;
+
 public interface IUserRepository
 {
     public Task Register(string email, string username, string password);
-    public Task<bool> Authenticate(string emailOrUsername, string password);
+    Task<User> GetByMailOrUsername(string emailOrUsername);
 }
+
 public class UserRepository(Context context) : IUserRepository
 {
     public Task Register(string email, string username, string password)
     {
-        throw new NotImplementedException();
+        context.Users.AddAsync(new User { Email = email, Username = username, Password = password });
+        return context.SaveChangesAsync();
     }
 
-    public Task<bool> Authenticate(string emailOrUsername, string password)
+    public Task<User> GetByMailOrUsername(string emailOrUsername)
     {
-        throw new NotImplementedException();
+        return context.Users.SingleAsync(u => u.Email == emailOrUsername || u.Username == emailOrUsername);
     }
 }
