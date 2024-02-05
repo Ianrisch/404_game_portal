@@ -55,6 +55,8 @@ public class Context : DbContext
             .HasOne(gf => gf.Language)
             .WithMany(f => f.GameLanguages)
             .HasForeignKey(gf => gf.LanguageId);
+
+        modelBuilder.Entity<User>().HasIndex(u => new { u.Email, u.Username }).IsUnique();
     }
 
     public DbSet<Game> Games { get; set; }
@@ -64,4 +66,5 @@ public class Context : DbContext
     public DbSet<GameFeature> GameFeatures { get; set; }
     public DbSet<GamePlatform> GamePlatforms { get; set; }
     public DbSet<GameLanguage> GameLanguages { get; set; }
+    public DbSet<User> Users { get; set; }
 }

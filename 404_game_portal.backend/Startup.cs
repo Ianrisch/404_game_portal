@@ -13,6 +13,9 @@ public class Startup
 
     public void Execute()
     {
+        AddCustomDbContext();
+        AddCustomCors();
+        AddRepositories();
         AddServices();
     }
 
@@ -22,9 +25,6 @@ public class Startup
             x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         _services.AddEndpointsApiExplorer();
         _services.AddSwaggerGen();
-        AddCustomDbContext();
-        AddCustomCors();
-        AddRepositories();
     }
 
 
