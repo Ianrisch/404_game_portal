@@ -33,7 +33,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         await HttpContext.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
             principal,
-            new AuthenticationProperties { IsPersistent = true}
+            new AuthenticationProperties { IsPersistent = true }
         );
 
         return Ok();
@@ -58,5 +58,23 @@ public class AuthController(IAuthService authService) : ControllerBase
     {
         await authService.Register(userViewModel);
         return Ok();
+    }
+
+    [HttpPut("changePassword")]
+    public async Task<ActionResult> ChangePassword([FromBody] UserChangePasswordViewModel userChangePasswordViewModel)
+    {
+        if (User.Identity?.Name == null) return Forbid();
+
+        try
+        {
+            await authService.ChangePassword(userChangePasswordViewModel, User.Identity.Name);
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest();
+        }
     }
 }

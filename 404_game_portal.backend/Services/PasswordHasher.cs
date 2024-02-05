@@ -6,6 +6,8 @@ public class PasswordHasher
 {
     private static string _hashIdentifier = "$MYHASH$V1$";
     private static HashAlgorithmName _hashAlgorithmName = HashAlgorithmName.SHA256;
+    private static int _iterations = 10000;
+
 
     /// <summary>
     /// Size of salt.
@@ -47,7 +49,7 @@ public class PasswordHasher
     /// <returns>The hash.</returns>
     public static string Hash(string password)
     {
-        return Hash(password, 10000);
+        return Hash(password, _iterations);
     }
 
     /// <summary>

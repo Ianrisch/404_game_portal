@@ -9,6 +9,7 @@ public interface IAuthService
     public Task<bool> Authenticate(LoginViewModel loginViewModel);
     public Task Register(UserCreationViewModel userViewModel);
     Task<UserViewModel> GetUser(string usernameOrEmail);
+    public Task<UserViewModel> ChangePassword(UserChangePasswordViewModel userChangePasswordViewModel, string username);
 }
 
 public class AuthService(IUserRepository userRepository) : IAuthService
@@ -28,5 +29,14 @@ public class AuthService(IUserRepository userRepository) : IAuthService
     public async Task<UserViewModel> GetUser(string usernameOrEmail)
     {
         return new UserViewModel(await userRepository.GetByMailOrUsername(usernameOrEmail));
+    }
+
+    public async Task<UserViewModel> ChangePassword(UserChangePasswordViewModel changePassword, string username)
+    {
+        if (!await Authenticate(new LoginViewModel()
+                { Password = changePassword.OldPassword, EmailOrUsername = username }))
+            throw new UnauthorizedAccessException();
+
+        return await userRepository.ChangePassword(username, PasswordHasher.Hash(changePassword.NewPassword));
     }
 }
