@@ -14,3 +14,14 @@ import GameCard from '@/components/GameCard.vue';
 const { loading, result, createPromise } = usePromise(api.fetchGames);
 createPromise();
 </script>
+
+<style lang="scss" scoped>
+.v-list {
+  padding: 15px 20px 0 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: start;
+}
+</style>

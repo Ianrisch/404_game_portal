@@ -12,7 +12,7 @@ const show = ref(false);
 </script>
 
 <template>
-  <v-card class="mx-auto" max-width="500">
+  <v-card class="mx-auto" width="300px">
     <v-img
       v-if="showImage"
       :src="game.image ?? 'https://picsum.photos/1000?random=' + game.id"
