@@ -14,7 +14,7 @@ namespace _404_game_portal.backend.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService) : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("login")]
     [AllowAnonymous]
     public async Task<ActionResult> Login([FromBody] LoginViewModel loginViewModel)
     {
