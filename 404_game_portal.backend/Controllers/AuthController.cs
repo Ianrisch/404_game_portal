@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using _404_game_portal.backend.Attributes;
 using _404_game_portal.backend.Services;
 using _404_game_portal.backend.ViewModels;
 using Microsoft.AspNetCore.Authentication;
@@ -9,10 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace _404_game_portal.backend.Controllers;
 
 [Controller]
+[CustomAuthorize]
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService) : ControllerBase
 {
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult> Login([FromBody] LoginViewModel loginViewModel)
     {
         if (!await authService.Authenticate(loginViewModel))
@@ -40,6 +43,14 @@ public class AuthController(IAuthService authService) : ControllerBase
         return Ok();
     }
 
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public async Task<ActionResult> Register([FromBody] UserCreationViewModel userViewModel)
+    {
+        await authService.Register(userViewModel);
+        return Ok();
+    }
+
     [HttpGet("logout")]
     public async Task<ActionResult> Logout()
     {
@@ -48,17 +59,9 @@ public class AuthController(IAuthService authService) : ControllerBase
     }
 
     [HttpGet("user")]
-    [Authorize]
     public async Task<ActionResult<UserViewModel>> GetUser([FromQuery] string usernameOrEmail)
     {
         return Ok(await authService.GetUser(usernameOrEmail));
-    }
-
-    [HttpPost("register")]
-    public async Task<ActionResult> Register([FromBody] UserCreationViewModel userViewModel)
-    {
-        await authService.Register(userViewModel);
-        return Ok();
     }
 
     [HttpPut("changePassword")]
