@@ -13,26 +13,19 @@ const show = ref(false);
 
 <template>
   <v-card class="mx-auto" width="300px">
-    <v-img
-      v-if="showImage"
-      :src="game.image ?? 'https://picsum.photos/1000?random=' + game.id"
-      height="200px"
-      cover
-    />
+    <v-window v-model="show" class="">
+      <v-window-item :value="false">
+        <v-img
+          v-if="showImage"
+          :src="game.image ?? 'https://picsum.photos/1000?random=' + game.id"
+          height="200px"
+          cover
+        />
+        <v-card-title> {{ game.name }}</v-card-title>
+      </v-window-item>
 
-    <v-card-title> {{ game.name }}</v-card-title>
-
-    <v-card-actions>
-      <VBtn color="purple" @click="$router.push(`/game/${game.id}`)">Mehr</VBtn>
-
-      <v-spacer />
-
-      <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show" />
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider />
+      <v-window-item :value="true">
+        <v-card-title> {{ game.name }}</v-card-title>
 
         <v-card-text>
           <div>
@@ -63,13 +56,28 @@ const show = ref(false);
             </v-chip>
           </v-chip-group>
         </v-card-text>
-      </div>
-    </v-expand-transition>
+      </v-window-item>
+    </v-window>
+
+    <v-card-actions>
+      <VBtn color="purple" @click="$router.push(`/game/${game.id}`)">Mehr</VBtn>
+
+      <v-spacer />
+
+      <v-btn :icon="show ? 'mdi-chevron-left' : 'mdi-chevron-right'" @click="show = !show" />
+    </v-card-actions>
   </v-card>
 </template>
 
 <style scoped>
 .v-card {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+
+  .v-window {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>
