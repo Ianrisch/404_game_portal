@@ -1,3 +1,5 @@
+using _404_game_portal.backend.Enums;
+
 namespace _404_game_portal.backend.Entities;
 
 public class User
@@ -6,4 +8,5 @@ public class User
     public string Email { get; set; }
     public string Username { get; set; }
     public string Password { get; set; }
+    public Role Role { get; set; }
 }
