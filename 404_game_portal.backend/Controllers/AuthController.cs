@@ -42,6 +42,11 @@ public class AuthController(IAuthService authService) : ControllerBase
 
         return Ok();
     }
+    [HttpGet("isLoggedIn")]
+    public ActionResult IsLoggedIn()
+    {
+        return Ok(User.Identity?.IsAuthenticated);
+    }
 
     [HttpPost("register")]
     [AllowAnonymous]

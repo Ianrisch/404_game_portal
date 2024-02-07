@@ -40,3 +40,5 @@ export const register = async (registerData: RegisterData): Promise<string> =>
 
 export const changePassword = async (changePasswordData: ChangePasswordData): Promise<string> =>
   httpClient.put('/api/auth/changePassword', changePasswordData);
+
+export const isLoggedIn = async (): Promise<boolean> => httpClient.get('/api/auth/isLoggedIn');
