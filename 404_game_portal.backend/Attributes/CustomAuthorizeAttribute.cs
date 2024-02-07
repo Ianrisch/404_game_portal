@@ -10,14 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class CustomAuthorizeAttribute : Attribute, IAuthorizationFilter
+public class CustomAuthorizeAttribute(params Role[]? roles) : Attribute, IAuthorizationFilter
 {
-    private readonly IList<Role> _roles;
-
-    public CustomAuthorizeAttribute(params Role[]? roles)
-    {
-        _roles = roles ?? [];
-    }
+    private readonly IList<Role> _roles = roles ?? [];
 
     public async void OnAuthorization(AuthorizationFilterContext context)
     {
