@@ -4,8 +4,8 @@
       <v-app-bar>
         <template #append>
           <v-switch
-            v-model:model-value="isDarkMode"
-            :label="isDarkMode ? 'Change to Lightmode' : 'Change to Darkmode'"
+            v-model:model-value="darkModeStore.isDarkMode"
+            :label="darkModeStore.isDarkMode ? 'Change to Light mode' : 'Change to Dark mode'"
           />
         </template>
       </v-app-bar>
@@ -18,11 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-const theme = useTheme();
-import { useTheme } from 'vuetify';
-const isDarkMode = ref<boolean>(theme.global.current.value.dark);
-watch(isDarkMode, (isDark) => {
-  theme.global.name.value = isDark ? 'dark' : 'light';
-});
+import { useDarkModeStore } from '@/store/darkModeStore';
+
+const darkModeStore = useDarkModeStore();
 </script>
