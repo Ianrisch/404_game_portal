@@ -21,7 +21,6 @@ createPromise();
 
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
   justify-content: start;
 }
 </style>

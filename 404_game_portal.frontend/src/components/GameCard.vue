@@ -71,6 +71,8 @@ const show = ref(false);
 
 <style scoped>
 .v-card {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
