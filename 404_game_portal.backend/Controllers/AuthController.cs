@@ -59,9 +59,16 @@ public class AuthController(IAuthService authService) : ControllerBase
     }
 
     [HttpGet("user")]
-    public async Task<ActionResult<UserViewModel>> GetUser([FromQuery] string usernameOrEmail)
+    public async Task<ActionResult<UserViewModel>> GetUser([FromQuery] string? usernameOrEmail)
     {
-        return Ok(await authService.GetUser(usernameOrEmail));
+        if (usernameOrEmail != null) return Ok(await authService.GetUser(usernameOrEmail));
+
+        if (User.Identity?.Name != null)
+        {
+            return Ok(await authService.GetUser(User.Identity.Name));
+        }
+
+        return NotFound();
     }
 
     [HttpPut("changePassword")]
