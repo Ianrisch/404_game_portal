@@ -2,6 +2,7 @@
 import type { Game } from '@/api/game';
 import { USK } from '@/api/game';
 import { ref } from 'vue';
+import CardTitleTooltip from '@/components/CardTitleTooltip.vue';
 
 defineProps<{
   game: Game;
@@ -21,11 +22,11 @@ const show = ref(false);
           height="200px"
           cover
         />
-        <v-card-title> {{ game.name }}</v-card-title>
+        <card-title-tooltip :title="game.name" />
       </v-window-item>
 
       <v-window-item :value="true">
-        <v-card-title> {{ game.name }}</v-card-title>
+        <card-title-tooltip :title="game.name" />
 
         <v-card-text>
           <div>
