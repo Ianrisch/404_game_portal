@@ -1,4 +1,6 @@
+using _404_game_portal.backend.Attributes;
 using _404_game_portal.backend.Entities;
+using _404_game_portal.backend.Enums;
 using _404_game_portal.backend.Repositories;
 using _404_game_portal.backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +31,7 @@ public class LanguageController : ControllerBase
     }
 
     [HttpPost]
+    [CustomAuthorize(Role.Admin)]
     public Language Create(LanguageCreationViewModel creationViewModel)
     {
         return _languageRepository.Create(creationViewModel);

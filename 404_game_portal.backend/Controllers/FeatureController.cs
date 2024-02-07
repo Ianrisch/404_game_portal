@@ -1,4 +1,6 @@
-﻿using _404_game_portal.backend.Entities;
+﻿using _404_game_portal.backend.Attributes;
+using _404_game_portal.backend.Entities;
+using _404_game_portal.backend.Enums;
 using _404_game_portal.backend.Repositories;
 using _404_game_portal.backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +32,7 @@ public class FeatureController : ControllerBase
     }
 
     [HttpPost]
+    [CustomAuthorize(Role.Admin)]
     public Feature Create(FeatureCreationViewModel creationViewModel)
     {
         return _featureRepository.Create(creationViewModel);
