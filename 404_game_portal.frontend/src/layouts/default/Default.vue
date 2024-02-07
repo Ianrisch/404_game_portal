@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+import { useDarkModeStore } from '@/store/darkModeStore';
+
+const darkModeStore = useDarkModeStore();
+</script>
+
 <template>
   <v-app>
     <v-layout>
@@ -16,9 +22,3 @@
     </v-layout>
   </v-app>
 </template>
-
-<script lang="ts" setup>
-import { useDarkModeStore } from '@/store/darkModeStore';
-
-const darkModeStore = useDarkModeStore();
-</script>
