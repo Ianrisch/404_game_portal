@@ -11,13 +11,23 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
   const useIsLoggedIn = usePromise(api.isLoggedIn, (loggedIn) => {
     if (loggedIn) {
       currentUser.createPromise();
+    } else {
+      user.value = undefined;
     }
+  });
+  const logout = usePromise(api.logOut, () => {
+    useIsLoggedIn.createPromise();
+  });
+  const login = usePromise(api.logIn, () => {
+    useIsLoggedIn.createPromise();
   });
 
   return {
-    fetch: () => currentUser.createPromise(),
+    fetchUser: () => currentUser.createPromise(),
     user,
     isLoggedIn: useIsLoggedIn.result,
     fetchLogin: useIsLoggedIn.createPromise,
+    logout: logout.createPromise,
+    login: login.createPromise,
   };
 });

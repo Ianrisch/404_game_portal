@@ -1,45 +1,41 @@
 <script setup lang="ts">
 import { useCurrentUserStore } from '@/store/currentUserStore';
-import { ref } from 'vue';
 
-const showMenu = ref(false);
 const currentUserStore = useCurrentUserStore();
-currentUserStore.fetchLogin();
 </script>
 
 <template>
-  <div v-if="currentUserStore.isLoggedIn && currentUserStore.user">
-    <div class="userprofile">
-      <div>
-        <v-avatar
-          :image="'https://picsum.photos/1000?random' + currentUserStore.user.username"
-        ></v-avatar>
-      </div>
-      <div class="username">{{ currentUserStore.user.username }}</div>
+  <div class="profileBlock">
+    <v-avatar :image="'https://picsum.photos/1000?random=' + currentUserStore.user.username" />
 
-      <v-menu
-        activator="parent"
-        v-model:model-value="showMenu"
-        :close-on-content-click="false"
-        location="bottom"
-      >
-        <v-card> asd </v-card>
-      </v-menu>
-    </div>
+    <div class="text">{{ currentUserStore.user.username }}</div>
+
+    <v-menu activator="parent" :close-on-content-click="false" location="bottom">
+      <v-card>
+        <v-list>
+          <v-list-item>
+            <v-btn @click="currentUserStore.logout">Logout</v-btn>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-menu>
   </div>
-  <div v-else>logged out</div>
 </template>
 
 <style scoped lang="scss">
 @import '@/scss/mixin.scss';
 
-.userprofile {
+.v-card {
+  padding: 10px;
+}
+
+.profileBlock {
   display: flex;
   align-items: center;
   justify-content: stretch;
   margin: 0 5px;
 
-  .username {
+  .text {
     margin: 0 0 0 5px;
   }
 
