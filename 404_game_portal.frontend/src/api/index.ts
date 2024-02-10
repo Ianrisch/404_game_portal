@@ -1,5 +1,13 @@
 import { fetchGames, fetchGame } from '@/api/game';
-import { changePassword, getUser, isLoggedIn, logIn, logOut, register } from '@/api/auth';
+import {
+  changePassword,
+  getUser,
+  isLoggedIn,
+  isUsernameOrEmailTaken,
+  logIn,
+  logOut,
+  register,
+} from '@/api/auth';
 
 const api = {
   fetchGames,
@@ -10,6 +18,7 @@ const api = {
   changePassword,
   getUser,
   isLoggedIn,
+  isUsernameOrEmailTaken,
 };
 
 export default api;

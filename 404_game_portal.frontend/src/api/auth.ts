@@ -42,3 +42,9 @@ export const changePassword = async (changePasswordData: ChangePasswordData): Pr
   httpClient.put('/api/auth/changePassword', changePasswordData);
 
 export const isLoggedIn = async (): Promise<boolean> => httpClient.get('/api/auth/isLoggedIn');
+export const isUsernameOrEmailTaken = async (username?: string, email?: string): Promise<boolean> =>
+  httpClient.get(
+    '/api/auth/isUsernameOrEmailAlreadyTaken?' +
+      (username ? `username=${username}` : '') +
+      (email ? `&email=${email}` : ''),
+  );
