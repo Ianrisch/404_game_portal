@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useDarkModeStore } from '@/store/darkModeStore';
-import ProfileBlock from '@/components/ProfileBlock.vue';
+import ProfileBlock from '@/components/BlockChooser.vue';
 
 const darkModeStore = useDarkModeStore();
 </script>
