@@ -42,7 +42,7 @@ const submit = async (event: SubmitEventPromise) => {
             v-model="password"
           />
           <div class="loginButtons">
-            <v-btn variant="plain">No account?</v-btn>
+            <v-btn to="register" variant="plain">No account?</v-btn>
             <v-btn type="submit">Login</v-btn>
           </div>
         </v-form>
