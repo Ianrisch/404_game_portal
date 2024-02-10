@@ -61,7 +61,7 @@ const show = ref(false);
     </v-window>
 
     <v-card-actions>
-      <VBtn color="purple" @click="$router.push(`/game/${game.id}`)">Mehr</VBtn>
+      <VBtn color="purple" :to="`/game/${game.id}`">More</VBtn>
 
       <v-spacer />
 
