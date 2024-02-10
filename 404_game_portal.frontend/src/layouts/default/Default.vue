@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useDarkModeStore } from '@/store/darkModeStore';
-import ProfileBlock from '@/components/BlockChooser.vue';
+import BlockChooser from '@/components/BlockChooser.vue';
 
 const darkModeStore = useDarkModeStore();
 </script>
@@ -10,7 +10,7 @@ const darkModeStore = useDarkModeStore();
     <v-layout>
       <v-app-bar>
         <template #append>
-          <profile-block> </profile-block>
+          <block-chooser />
 
           <v-switch
             v-model:model-value="darkModeStore.isDarkMode"
