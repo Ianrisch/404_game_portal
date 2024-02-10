@@ -19,7 +19,7 @@ export type RegisterData = {
 };
 
 export type LoginData = {
-  email: string;
+  emailOrUsername: string;
   password: string;
 };
 
