@@ -7,7 +7,7 @@ namespace _404_game_portal.backend.Repositories;
 public interface IUserRepository
 {
     public Task Register(string email, string username, string password);
-    Task<User> GetByMailOrUsername(string emailOrUsername);
+    Task<User?> GetByMailOrUsername(string emailOrUsername);
     Task<UserViewModel> ChangePassword(string username, string hash);
 }
 
@@ -19,9 +19,9 @@ public class UserRepository(Context context) : IUserRepository
         return context.SaveChangesAsync();
     }
 
-    public Task<User> GetByMailOrUsername(string emailOrUsername)
+    public Task<User?> GetByMailOrUsername(string emailOrUsername)
     {
-        return context.Users.SingleAsync(u => u.Email == emailOrUsername || u.Username == emailOrUsername);
+        return context.Users.SingleOrDefaultAsync(u => u.Email == emailOrUsername || u.Username == emailOrUsername);
     }
 
     public async Task<UserViewModel> ChangePassword(string username, string hash)

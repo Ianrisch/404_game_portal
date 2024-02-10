@@ -42,6 +42,7 @@ public class AuthController(IAuthService authService) : ControllerBase
 
         return Ok("success");
     }
+
     [HttpGet("isLoggedIn")]
     [AllowAnonymous]
     public ActionResult IsLoggedIn()
@@ -57,6 +58,24 @@ public class AuthController(IAuthService authService) : ControllerBase
         return Ok("success");
     }
 
+    [HttpGet("isUsernameOrEmailAlreadyTaken")]
+    [AllowAnonymous]
+    public async Task<ActionResult<bool>> IsUsernameOrEmailAlreadyTaken([FromQuery] string? username, [FromQuery] string? email)
+    {
+        if (username != null)
+        {
+            var user = await authService.GetUser(username);
+            return Ok( user != null);
+        }  
+        if (email != null)
+        {
+            var user = await authService.GetUser(email);
+            return Ok(user != null);
+        }
+
+        return BadRequest();
+    }
+    
     [HttpGet("logout")]
     public async Task<ActionResult> Logout()
     {
@@ -67,14 +86,20 @@ public class AuthController(IAuthService authService) : ControllerBase
     [HttpGet("user")]
     public async Task<ActionResult<UserViewModel>> GetUser([FromQuery] string? usernameOrEmail)
     {
-        if (usernameOrEmail != null) return Ok(await authService.GetUser(usernameOrEmail));
+        if (usernameOrEmail != null) return Ok(await GetActionUserResult(usernameOrEmail));
 
-        if (User.Identity?.Name != null)
-        {
-            return Ok(await authService.GetUser(User.Identity.Name));
-        }
+        if (User.Identity?.Name == null) return NotFound();
 
-        return NotFound();
+        return await GetActionUserResult(User.Identity?.Name!);
+    }
+    
+    private async Task<ActionResult<UserViewModel>> GetActionUserResult(string usernameOrEmail)
+    {
+        var user = await authService.GetUser(usernameOrEmail);
+        
+        if (user is null) return NotFound();
+        
+        return Ok(user);
     }
 
     [HttpPut("changePassword")]
