@@ -11,7 +11,7 @@ public interface IGameRepository
 
     public Game Create(GameCreationViewModel game);
     public List<Game> GetAll();
-    List<Game> GetByIds(List<Guid> games, bool includeAll = false);
+    List<Game> GetByIds(List<Guid> gameIds, bool includeAll = false);
 }
 
 public class GameRepository : IGameRepository
@@ -62,13 +62,13 @@ public class GameRepository : IGameRepository
             .ToList();
     }
 
-    public List<Game> GetByIds(List<Guid> games, bool includeAll = false)
+    public List<Game> GetByIds(List<Guid> gameIds, bool includeAll = false)
     {
         return _context.Games
             .IncludeIf(includeAll, e => e.GamePlatforms)
             .IncludeIf(includeAll, e => e.GameFeatures)
             .IncludeIf(includeAll, e => e.GameLanguages)
-            .Where(e => games.Contains(e.Id))
+            .Where(e => gameIds.Contains(e.Id))
             .ToList();
     }
 }
