@@ -14,5 +14,10 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
     }
   });
 
-  return { fetch: () => currentUser.createPromise(), user };
+  return {
+    fetch: () => currentUser.createPromise(),
+    user,
+    isLoggedIn: useIsLoggedIn.result,
+    fetchLogin: useIsLoggedIn.createPromise,
+  };
 });
