@@ -40,7 +40,7 @@ public class AuthController(IAuthService authService) : ControllerBase
             new AuthenticationProperties { IsPersistent = true }
         );
 
-        return Ok();
+        return Ok("success");
     }
     [HttpGet("isLoggedIn")]
     public ActionResult IsLoggedIn()
@@ -53,14 +53,14 @@ public class AuthController(IAuthService authService) : ControllerBase
     public async Task<ActionResult> Register([FromBody] UserCreationViewModel userViewModel)
     {
         await authService.Register(userViewModel);
-        return Ok();
+        return Ok("success");
     }
 
     [HttpGet("logout")]
     public async Task<ActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return Ok();
+        return Ok("success");
     }
 
     [HttpGet("user")]
@@ -85,7 +85,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         {
             await authService.ChangePassword(userChangePasswordViewModel, User.Identity.Name);
 
-            return Ok();
+            return Ok("success");
         }
         catch (Exception e)
         {
