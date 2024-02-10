@@ -15,10 +15,8 @@ currentUserStore.fetchLogin();
           :image="'https://picsum.photos/1000?random' + currentUserStore.user.username"
         ></v-avatar>
       </div>
+      <div class="username">{{ currentUserStore.user.username }}</div>
 
-      <div>
-        {{ currentUserStore.user.username }}
-      </div>
       <v-menu
         activator="parent"
         v-model:model-value="showMenu"
@@ -41,13 +39,10 @@ currentUserStore.fetchLogin();
   justify-content: stretch;
   margin: 0 5px;
 
-  :first-child {
-    width: 40px;
-    height: 40px;
+  .username {
+    margin: 0 0 0 5px;
   }
-  :last-child {
-    margin-left: 5px;
-  }
+
   @include noSelect;
 }
 </style>
