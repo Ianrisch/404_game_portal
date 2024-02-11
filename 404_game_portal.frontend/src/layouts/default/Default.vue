@@ -9,6 +9,11 @@ const darkModeStore = useDarkModeStore();
   <v-app>
     <v-layout>
       <v-app-bar>
+        <template #prepend>
+          <router-link to="/">
+            <v-img class="logo" to="home" src="@/assets/logo.png" />
+          </router-link>
+        </template>
         <template #append>
           <block-chooser />
 
@@ -25,3 +30,11 @@ const darkModeStore = useDarkModeStore();
     </v-layout>
   </v-app>
 </template>
+
+<style lang="scss">
+.logo {
+  width: 176px;
+  height: 64px;
+  margin-left: 5px;
+}
+</style>
