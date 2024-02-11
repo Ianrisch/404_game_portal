@@ -2,7 +2,7 @@
 import { USK } from '@/api/game';
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 const props = defineProps<{
   id: string;
 }>();
@@ -16,51 +16,113 @@ watch(
   },
   { immediate: true },
 );
+
+// let descriptionLengthExceeded = false;
+// if (result && result.value && result.value.description.length > 100) {
+//   descriptionLengthExceeded = true;
+//   console.log(result.value.description.length);
+// }
 </script>
 
 <template>
-  <v-card v-if="result">
-    <v-card-item>
-      <v-btn icon="mdi-arrow-left" to=".." variant="tonal" />
-    </v-card-item>
-    <v-card-item>
-      <img :src="result.image ?? 'https://picsum.photos/1000/?random=' + result.id" alt="test" />
-    </v-card-item>
-    <div>
-      <v-card-title>{{ result.name }}</v-card-title>
-      <v-card-text>{{ result.description }}</v-card-text>
-      <v-card-item>
-        <div>{{ USK[result.usk] }}</div>
-        <div>Release Date: {{ result.releaseDate.toLocaleString() }}</div>
-        <v-chip-group>
-          <v-chip
-            v-for="platformAndPrice in result.platformAndPrices"
-            :key="platformAndPrice.id"
-            :ripple="false"
-          >
-            {{ platformAndPrice.price.toFixed(2).replace('.', ',') }}-€ -
-            {{ platformAndPrice.platformName }}
-          </v-chip>
-        </v-chip-group>
-        <v-chip-group>
-          <v-chip v-for="feature in result.features" :key="feature.featureName" :ripple="false">
-            {{ feature.featureName }}
-            <v-tooltip activator="parent" location="top">
-              {{ feature.featureDescription }}
-            </v-tooltip>
-          </v-chip>
-        </v-chip-group>
-        <v-chip-group>
-          <v-chip v-for="language in result.languages" :key="language.id" :ripple="false">
-            {{ language.languageName }}
-          </v-chip>
-        </v-chip-group>
-      </v-card-item>
-    </div>
-  </v-card>
+  <div class="background" v-if="result">
+    <v-card class="game">
+      <v-row>
+        <h1>{{ result.name }}</h1>
+      </v-row>
+      <v-row>
+        <v-col cols="8">
+          <v-img
+            :src="result.image ?? 'https://picsum.photos/1920/1080/?random=' + result.id"
+            alt="test"
+            width="100%"
+          />
+        </v-col>
+        <v-col cols="4">
+          <p v-if="descriptionLengthExceeded">
+            {{ result.description.substring(0, 100) + '...' }}
+            <a href="https://www.google.com">more</a>
+          </p>
+          <p v-else>
+            {{ result.description }}
+          </p>
+          <v-list>
+            <v-list-item> {{ USK[result.usk] }}</v-list-item>
+            <v-list-item>Release Date: {{ result.releaseDate.toLocaleString() }}</v-list-item>
+          </v-list>
+          <v-chip-group>
+            <v-chip
+              v-for="platformAndPrice in result.platformAndPrices"
+              :key="platformAndPrice.id"
+              :ripple="false"
+            >
+              <div v-if="platformAndPrice.price != 0">
+                {{ platformAndPrice.price.toFixed(2).replace('.', ',') }}-€ -
+                {{ platformAndPrice.platformName + ' ' + platformAndPrice.platformVersion }}
+              </div>
+              <div v-else>
+                Free on {{ platformAndPrice.platformName + ' ' + platformAndPrice.platformVersion }}
+              </div>
+            </v-chip>
+          </v-chip-group>
+          <v-chip-group>
+            <v-chip v-for="feature in result.features" :key="feature.featureName" :ripple="false">
+              {{ feature.featureName }}
+              <v-tooltip activator="parent" location="top">
+                {{ feature.featureDescription }}
+              </v-tooltip>
+            </v-chip>
+          </v-chip-group>
+          <v-chip-group>
+            <v-chip v-for="language in result.languages" :key="language.id" :ripple="false">
+              {{ language.languageName }}
+            </v-chip>
+          </v-chip-group>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-card class="description">
+      <h2>More information</h2>
+      <v-spacer />
+      <pre>{{ result.description }}</pre>
+    </v-card>
+  </div>
 </template>
 
 <style scoped>
+h1 {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+}
+.background {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-image: url('@/assets/register.jpg');
+  background-size: cover;
+}
+.v-card {
+  margin-top: 15px;
+  padding: 10px;
+  width: 60%;
+
+  &:first-of-type {
+    margin-top: 2%;
+  }
+
+  &.description {
+    overflow: hidden;
+
+    pre {
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+  }
+}
 :deep(.v-chip) {
   display: flex;
   justify-content: center;
