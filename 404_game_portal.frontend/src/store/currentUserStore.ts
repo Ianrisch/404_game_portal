@@ -8,22 +8,18 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
   const user = ref<User>();
 
   const currentUser = usePromise(api.getUser, (u) => (user.value = u));
-  const useIsLoggedIn = usePromise(api.isLoggedIn, (loggedIn) => {
+  const useIsLoggedIn = usePromise(api.isLoggedIn, async (loggedIn) => {
     if (loggedIn) {
-      currentUser.createPromise();
+      await currentUser.createPromise();
     } else {
       user.value = undefined;
     }
   });
-  const logout = usePromise(api.logOut, () => {
-    useIsLoggedIn.createPromise();
-  });
-  const login = usePromise(api.logIn, () => {
-    useIsLoggedIn.createPromise();
-  });
+  const logout = usePromise(api.logOut, async () => await useIsLoggedIn.createPromise());
+  const login = usePromise(api.logIn, async () => await useIsLoggedIn.createPromise());
 
   return {
-    fetchUser: () => currentUser.createPromise(),
+    fetchUser: async () => await currentUser.createPromise(),
     user,
     isLoggedIn: useIsLoggedIn.result,
     fetchLogin: useIsLoggedIn.createPromise,

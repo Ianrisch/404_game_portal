@@ -1,5 +1,31 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, RouteLocationNormalized } from 'vue-router';
+import { useCurrentUserStore } from '@/store/currentUserStore';
+import { Role } from '@/api/auth';
+
+const authorize = async (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  role: Role,
+) => {
+  const useCurrenUser = useCurrentUserStore();
+  await useCurrenUser.fetchLogin();
+  if (!useCurrenUser.isLoggedIn) return from;
+
+  await useCurrenUser.fetchUser();
+
+  if (useCurrenUser.user!.role >= role) return true;
+  return from;
+};
+
+function authorizeAdmin() {
+  return async (to: RouteLocationNormalized, from: RouteLocationNormalized) =>
+    await authorize(to, from, Role.Admin);
+}
+function authorizeUser() {
+  return async (to: RouteLocationNormalized, from: RouteLocationNormalized) =>
+    await authorize(to, from, Role.User);
+}
 
 const routes = [
   {
@@ -17,6 +43,12 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: () => import('@/views/Register.vue'),
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('@/views/Admin.vue'),
+    beforeEnter: [authorizeAdmin()],
   },
 ];
 
