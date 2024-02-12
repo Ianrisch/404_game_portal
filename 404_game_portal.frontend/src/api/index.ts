@@ -1,4 +1,4 @@
-import { fetchGames, fetchGame } from '@/api/game';
+import { fetchGames, fetchGame, createGame } from '@/api/game';
 import {
   changePassword,
   getUser,
@@ -8,10 +8,28 @@ import {
   logOut,
   register,
 } from '@/api/auth';
+import { createFeature, fetchFeature, fetchFeatures } from '@/api/feature';
+import { createLanguage, fetchLanguage, fetchLanguages } from '@/api/language';
+import { createPlatform, fetchPlatform, fetchPlatforms } from '@/api/platformAndPrice';
+import { createRating, fetchRating, fetchRatingsForGame, fetchRatingsForUser } from '@/api/rating';
 
 const api = {
   fetchGames,
   fetchGame,
+  createGame,
+  fetchFeatures,
+  fetchFeature,
+  createFeature,
+  fetchLanguages,
+  fetchLanguage,
+  createLanguage,
+  fetchPlatforms,
+  fetchPlatform,
+  createPlatform,
+  fetchRatingsForGame,
+  fetchRatingsForUser,
+  fetchRating,
+  createRating,
   logIn,
   logOut,
   register,
