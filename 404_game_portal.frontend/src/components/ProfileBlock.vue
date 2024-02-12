@@ -12,11 +12,7 @@ const currentUserStore = useCurrentUserStore();
 
     <v-menu activator="parent" :close-on-content-click="false" location="bottom">
       <v-card>
-        <v-list>
-          <v-list-item>
-            <v-btn @click="currentUserStore.logout">Logout</v-btn>
-          </v-list-item>
-        </v-list>
+        <v-btn variant="text" @click="currentUserStore.logout">Logout</v-btn>
       </v-card>
     </v-menu>
   </div>
