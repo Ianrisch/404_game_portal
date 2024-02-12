@@ -13,6 +13,7 @@ public class Game
     public string Description { get; set; }
     public List<GameFeature> GameFeatures { get; set; }
     public List<GameLanguage> GameLanguages { get; set; }
+    public List<GameRating> GameRatings { get; set; }
 
     public Game(GameCreationViewModel creationViewModel)
     {
