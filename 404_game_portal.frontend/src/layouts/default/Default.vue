@@ -33,6 +33,7 @@ const darkModeStore = useDarkModeStore();
 </template>
 
 <style lang="scss">
+@import '@/scss/mixin.scss';
 .logo {
   width: 176px;
   height: 64px;
@@ -47,7 +48,7 @@ const darkModeStore = useDarkModeStore();
   &:visited,
   &:active {
     text-decoration: none;
-    color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+    @include themeColor;
   }
 }
 </style>

@@ -5,3 +5,6 @@
   -webkit-user-select: none;
   -o-user-select: none;
 }
+@mixin themeColor {
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
