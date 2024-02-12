@@ -2,17 +2,9 @@
 
 namespace _404_game_portal.backend.ViewModels;
 
-public class RatingViewModel
+public class RatingCreationViewModel
 {
     public Guid UserId { get; set; }
     public Guid GameId { get; set; }
     public int Rating { get; set; }
-    
-    public RatingViewModel(GameRating gameRating)
-    {
-        UserId = gameRating.UserId;
-        GameId = gameRating.GameId;
-        Rating = gameRating.Rating;
-
-    }
 }
