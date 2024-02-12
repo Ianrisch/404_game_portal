@@ -6,8 +6,13 @@ import { ref, watch } from 'vue';
 const props = defineProps<{
   id: string;
 }>();
+const descriptionLengthExceeded = ref(false);
 
-const { loading, result, createPromise } = usePromise(api.fetchGame);
+const { loading, result, createPromise } = usePromise(api.fetchGame, (game) => {
+  if (game.description.length > 100) {
+    descriptionLengthExceeded.value = true;
+  }
+});
 
 watch(
   () => props.id,
@@ -16,12 +21,6 @@ watch(
   },
   { immediate: true },
 );
-
-// let descriptionLengthExceeded = false;
-// if (result && result.value && result.value.description.length > 100) {
-//   descriptionLengthExceeded = true;
-//   console.log(result.value.description.length);
-// }
 </script>
 
 <template>
@@ -41,7 +40,7 @@ watch(
         <v-col cols="4">
           <p v-if="descriptionLengthExceeded">
             {{ result.description.substring(0, 100) + '...' }}
-            <a href="https://www.google.com">more</a>
+            <a href="#description">more</a>
           </p>
           <p v-else>
             {{ result.description }}
@@ -81,7 +80,7 @@ watch(
         </v-col>
       </v-row>
     </v-card>
-    <v-card class="description">
+    <v-card v-if="descriptionLengthExceeded" id="description">
       <h2>More information</h2>
       <v-spacer />
       <pre>{{ result.description }}</pre>
@@ -114,7 +113,7 @@ h1 {
     margin-top: 2%;
   }
 
-  &.description {
+  #description {
     overflow: hidden;
 
     pre {
