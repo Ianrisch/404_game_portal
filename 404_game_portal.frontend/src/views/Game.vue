@@ -4,6 +4,7 @@ import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { ref, watch } from 'vue';
 import DescriptionShortener from '@/components/DescriptionShortener.vue';
+import StarBar from '@/components/StarBar.vue';
 
 const props = defineProps<{
   id: string;
@@ -74,6 +75,9 @@ watch(
           </v-chip-group>
         </v-col>
       </v-row>
+    </v-card>
+    <v-card>
+      <star-bar />
     </v-card>
     <v-card v-if="descriptionLengthExceeded" id="description">
       <h2>More information</h2>
