@@ -75,5 +75,7 @@ import Settings from '@/layouts/default/Settings.vue';
     text-decoration: none;
     @include themeColor;
   }
+  @include noDrag;
+  @include noSelect;
 }
 </style>
