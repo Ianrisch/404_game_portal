@@ -101,7 +101,7 @@ h1 {
   flex-direction: column;
   align-items: center;
 
-  background-image: url('@/assets/register.jpg');
+  background-image: url('@/assets/background.jpg');
   background-size: cover;
 }
 .v-card {
