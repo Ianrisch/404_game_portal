@@ -3,6 +3,7 @@ import type { Game } from '@/api/game';
 import { USK } from '@/api/game';
 import { ref } from 'vue';
 import CardTitleTooltip from '@/components/CardTitleTooltip.vue';
+import StarBar from '@/components/StarBar.vue';
 
 defineProps<{
   game: Game;
@@ -16,12 +17,18 @@ const show = ref(false);
   <v-card class="mx-auto" width="300px">
     <v-window v-model="show" class="">
       <v-window-item :value="false">
-        <v-img
-          v-if="showImage"
-          :src="game.image ?? 'https://picsum.photos/1000?random=' + game.id"
-          height="200px"
-          cover
-        />
+        <div>
+          <div class="shadow">
+            <v-img
+              v-if="showImage"
+              :src="game.image ?? 'https://picsum.photos/1000?random=' + game.id"
+              height="200px"
+              cover
+            />
+          </div>
+          <star-bar class="star-bar" />
+        </div>
+
         <card-title-tooltip :title="game.name" />
       </v-window-item>
 
@@ -70,7 +77,8 @@ const show = ref(false);
   </v-card>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/scss/mixin.scss';
 .v-card {
   margin-left: 5px !important;
   margin-right: 5px !important;
@@ -81,6 +89,26 @@ const show = ref(false);
   .v-window {
     width: 100%;
     height: 100%;
+  }
+}
+.star-bar {
+  position: absolute;
+  right: 0;
+  bottom: 20%;
+  color: darkorange;
+}
+.shadow {
+  content: '';
+  z-index: 1;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgb(var(--v-theme-surface)));
+  @include noDrag;
+}
+:deep(.v-img) {
+  z-index: -1;
+
+  img {
+    @include noSelect;
+    @include noDrag;
   }
 }
 </style>
