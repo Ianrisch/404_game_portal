@@ -3,7 +3,7 @@ import { USK } from '@/api/game';
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { ref, watch } from 'vue';
-import DescriptionShortener from '@/views/DescriptionShortener.vue';
+import DescriptionShortener from '@/components/DescriptionShortener.vue';
 
 const props = defineProps<{
   id: string;
