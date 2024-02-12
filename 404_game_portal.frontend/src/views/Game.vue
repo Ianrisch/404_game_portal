@@ -3,16 +3,14 @@ import { USK } from '@/api/game';
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { ref, watch } from 'vue';
+import DescriptionShortener from '@/views/DescriptionShortener.vue';
+
 const props = defineProps<{
   id: string;
 }>();
-const descriptionLengthExceeded = ref(false);
+const descriptionLengthExceeded = ref<boolean>();
 
-const { loading, result, createPromise } = usePromise(api.fetchGame, (game) => {
-  if (game.description.length > 100) {
-    descriptionLengthExceeded.value = true;
-  }
-});
+const { loading, result, createPromise } = usePromise(api.fetchGame);
 
 watch(
   () => props.id,
@@ -38,13 +36,10 @@ watch(
           />
         </v-col>
         <v-col cols="4">
-          <p v-if="descriptionLengthExceeded">
-            {{ result.description.substring(0, 100) + '...' }}
-            <a href="#description">more</a>
-          </p>
-          <p v-else>
-            {{ result.description }}
-          </p>
+          <description-shortener
+            :description="result.description"
+            v-model:description-length-exceeded="descriptionLengthExceeded"
+          />
           <v-list>
             <v-list-item> {{ USK[result.usk] }}</v-list-item>
             <v-list-item>Release Date: {{ result.releaseDate.toLocaleString() }}</v-list-item>
@@ -113,9 +108,7 @@ h1 {
     margin-top: 2%;
   }
 
-  #description {
-    overflow: hidden;
-
+  &#description {
     pre {
       overflow: auto;
       white-space: pre-wrap;
