@@ -26,20 +26,39 @@ import Settings from '@/layouts/default/Settings.vue';
     </v-layout>
     <v-footer>
       <v-row justify="center" no-gutters>
-        <v-btn variant="text" class="mx-2 footer-btn" rounded="xl" to="/about"> About </v-btn>
-        <v-btn variant="text" class="mx-2 footer-btn" rounded="xl" to="/contact">
+        <v-btn variant="text" class="mx-2 footer-btn" rounded="xl">
+          About
+          <v-dialog activator="parent" width="600px">
+            <v-card>
+              <v-card-text>
+                Das 404 GamePortal ist ein Projekt von Ian Risch & Julius Lange für das Pflichtfach
+                Dynamische Webseiten der Carl Benz Berufschule
+              </v-card-text>
+              <v-img src="@/assets/background.jpg" alt="test" width="100%"></v-img>
+            </v-card> </v-dialog
+        ></v-btn>
+        <v-btn
+          variant="text"
+          class="mx-2 footer-btn"
+          rounded="xl"
+          href="mailto:noreply@404gameportal.com"
+        >
           Contact us
         </v-btn>
         <v-col class="text-center mt-4" cols="12">
-          {{ new Date().getFullYear() }} — <strong>404 Game Portal</strong>
+          {{ new Date().getFullYear() }} — <strong>404 GamePortal</strong>
         </v-col>
       </v-row>
     </v-footer>
   </v-app>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '@/scss/mixin.scss';
+.v-app-bar {
+  position: fixed !important;
+}
+
 .logo {
   width: 176px;
   height: 64px;
