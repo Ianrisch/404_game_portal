@@ -108,6 +108,10 @@ h1 {
     margin-top: 2%;
   }
 
+  &:last-of-type {
+    margin-bottom: 20px;
+  }
+
   &#description {
     pre {
       overflow: auto;
