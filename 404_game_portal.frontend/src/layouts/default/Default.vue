@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { useDarkModeStore } from '@/store/darkModeStore';
 import BlockChooser from '@/components/BlockChooser.vue';
-
-const darkModeStore = useDarkModeStore();
+import Settings from '@/layouts/default/Settings.vue';
 </script>
 
 <template>
@@ -18,10 +16,7 @@ const darkModeStore = useDarkModeStore();
         <template #append>
           <block-chooser />
 
-          <v-switch
-            v-model:model-value="darkModeStore.isDarkMode"
-            :label="darkModeStore.isDarkMode ? 'Change to Light mode' : 'Change to Dark mode'"
-          />
+          <settings />
         </template>
       </v-app-bar>
 
@@ -29,6 +24,17 @@ const darkModeStore = useDarkModeStore();
         <router-view />
       </v-main>
     </v-layout>
+    <v-footer>
+      <v-row justify="center" no-gutters>
+        <v-btn variant="text" class="mx-2 footer-btn" rounded="xl" to="/about"> About </v-btn>
+        <v-btn variant="text" class="mx-2 footer-btn" rounded="xl" to="/contact">
+          Contact us
+        </v-btn>
+        <v-col class="text-center mt-4" cols="12">
+          {{ new Date().getFullYear() }} — <strong>404 Game Portal</strong>
+        </v-col>
+      </v-row>
+    </v-footer>
   </v-app>
 </template>
 
