@@ -13,11 +13,18 @@ const cursor = computed(() => (props.clickEnabled ? 'pointer' : 'default'));
 <template>
   <div>
     <v-btn
+      v-for="a in 5"
+      :v-key="a"
       variant="plain"
       :ripple="false"
-      v-for="a in 5"
       size="40px"
-      :icon="a <= rating ? 'mdi-star' : 'mdi-star-outline'"
+      :icon="
+        rating - a >= 0
+          ? 'mdi-star'
+          : rating - a >= -0.5
+            ? 'mdi-star-half-full'
+            : 'mdi-star-outline'
+      "
       @click="rating = a"
       :disabled="!clickEnabled"
     />
