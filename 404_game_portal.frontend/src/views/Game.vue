@@ -120,6 +120,7 @@ h1 {
     pre {
       overflow: auto;
       white-space: pre-wrap;
+      font-family: 'Roboto', sans-serif;
     }
   }
 }

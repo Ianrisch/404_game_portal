@@ -79,6 +79,7 @@ const show = ref(false);
 
 <style scoped lang="scss">
 @import '@/scss/mixin.scss';
+
 .v-card {
   margin-left: 5px !important;
   margin-right: 5px !important;
@@ -91,18 +92,21 @@ const show = ref(false);
     height: 100%;
   }
 }
+
 .star-bar {
   position: absolute;
   right: 0;
   bottom: 20%;
   color: darkorange;
 }
+
 .shadow {
   content: '';
   z-index: 1;
   background: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgb(var(--v-theme-surface)));
   @include noDrag;
 }
+
 :deep(.v-img) {
   z-index: -1;
 

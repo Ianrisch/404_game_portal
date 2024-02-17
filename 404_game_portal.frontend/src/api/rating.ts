@@ -22,4 +22,4 @@ export const fetchRatingsForUser = async (username: string): Promise<Rating[]> =
 export const fetchRatingsForGame = async (gameId: string): Promise<Rating[]> =>
   httpClient.get(`/api/rating/game/${gameId}`);
 export const createRating = async (data: RatingUpdateData): Promise<Rating> =>
-  httpClient.post(`/api/platform`, data);
+  httpClient.post(`/api/rating?gameId=${data.gameId}&rating=${data.rating}`, {});
