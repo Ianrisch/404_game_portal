@@ -26,7 +26,11 @@ const show = ref(false);
               cover
             />
           </div>
-          <star-bar class="star-bar" />
+          <star-bar
+            class="star-bar"
+            v-if="game.totalRatings > 0"
+            v-model:rating="game.ratingAverage"
+          />
         </div>
 
         <card-title-tooltip :title="game.name" />

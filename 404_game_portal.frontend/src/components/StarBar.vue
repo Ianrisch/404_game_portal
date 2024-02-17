@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import usePromise from '@/composables/usePromise';
 
 const rating = defineModel<number>('rating', { default: 0 });
 const props = defineProps<{

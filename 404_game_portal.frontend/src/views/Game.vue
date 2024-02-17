@@ -5,6 +5,7 @@ import api from '@/api';
 import { ref, watch } from 'vue';
 import DescriptionShortener from '@/components/DescriptionShortener.vue';
 import StarBar from '@/components/StarBar.vue';
+import RatingCommentCard from '@/components/RatingCommentCard.vue';
 
 const props = defineProps<{
   id: string;
@@ -41,7 +42,12 @@ watch(
             :description="result.description"
             v-model:description-length-exceeded="descriptionLengthExceeded"
           />
+
           <v-list>
+            <v-list-item>
+              <star-bar v-if="result.totalRatings > 0" v-model:rating="result.ratingAverage" />
+              <div v-else>No Ratings yet</div>
+            </v-list-item>
             <v-list-item> {{ USK[result.usk] }}</v-list-item>
             <v-list-item>Release Date: {{ result.releaseDate.toLocaleString() }}</v-list-item>
           </v-list>
@@ -76,9 +82,7 @@ watch(
         </v-col>
       </v-row>
     </v-card>
-    <v-card>
-      <star-bar />
-    </v-card>
+    <rating-comment-card :game-id="result.id" />
     <v-card v-if="descriptionLengthExceeded" id="description">
       <h2>More information</h2>
       <v-spacer />
