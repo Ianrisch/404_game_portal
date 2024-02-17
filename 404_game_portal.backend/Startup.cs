@@ -58,5 +58,6 @@ public class Startup
         _services.AddScoped<IPlatformRepository, PlatformRepository>();
         _services.AddScoped<IUserRepository, UserRepository>();
         _services.AddScoped<IGameRatingRepository, GameRatingRepository>();
+        _services.AddScoped<IGameCommentRepository, GameCommentRepository>();
     }
 }
