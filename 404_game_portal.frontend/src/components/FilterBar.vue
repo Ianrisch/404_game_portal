@@ -63,13 +63,7 @@ const show = ref(false);
         </v-col>
         <v-col cols="3">
           <div>Maximum Price</div>
-          <v-slider
-            v-model="filterOptions.maximumPrice"
-            :min="0"
-            :max="300"
-            :step="1"
-            hide-details="auto"
-          >
+          <v-slider v-model="filterOptions.maximumPrice" :max="300" :step="1" hide-details="auto">
             <template #append>
               <v-text-field
                 v-model="filterOptions.maximumPrice"

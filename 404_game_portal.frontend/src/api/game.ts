@@ -54,7 +54,7 @@ export const fetchGames = async (options: FilterOptions): Promise<Game[]> =>
     '/api/game?' +
       (options.usk ? `usk=${options.usk}` : '') +
       (options.gameName ? `&gameName=${options.gameName}` : '') +
-      (options.maximumPrice ? `&maximumPrice=${options.maximumPrice}` : '') +
+      (options.maximumPrice != undefined ? `&maximumPrice=${options.maximumPrice}` : '') +
       (options.platformId ? `&platformId=${options.platformId}` : '') +
       (options.featureId ? `&featureId=${options.featureId}` : '') +
       (options.languageId ? `&languageId=${options.languageId}` : ''),
