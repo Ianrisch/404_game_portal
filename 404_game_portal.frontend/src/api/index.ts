@@ -12,6 +12,7 @@ import { createFeature, fetchFeature, fetchFeatures } from '@/api/feature';
 import { createLanguage, fetchLanguage, fetchLanguages } from '@/api/language';
 import { createPlatform, fetchPlatform, fetchPlatforms } from '@/api/platformAndPrice';
 import { createRating, fetchRating, fetchRatingsForGame, fetchRatingsForUser } from '@/api/rating';
+import { createComment, fetchComments, updateComment } from '@/api/comment';
 
 const api = {
   fetchGames,
@@ -30,6 +31,9 @@ const api = {
   fetchRatingsForUser,
   fetchRating,
   createRating,
+  fetchComments,
+  createComment,
+  updateComment,
   logIn,
   logOut,
   register,
