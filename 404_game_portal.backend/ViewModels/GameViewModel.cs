@@ -1,3 +1,4 @@
+using _404_game_portal.backend.Dto;
 using _404_game_portal.backend.Entities;
 
 namespace _404_game_portal.backend.ViewModels;
@@ -12,8 +13,11 @@ public class GameViewModel
     public string Description { get; set; }
     public List<FeatureViewModel> Features { get; set; }
     public List<LanguageViewModel> Languages { get; set; }
+    public double RatingAverage { get; set; }
+    public int TotalRatings { get; set; }
 
-    public GameViewModel(Game game)
+
+    public GameViewModel(GameDto game)
     {
         Id = game.Id;
         Name = game.Name;
@@ -23,6 +27,8 @@ public class GameViewModel
         Features = game.GameFeatures.Select(gf => new FeatureViewModel(gf.Feature)).ToList();
         Languages = game.GameLanguages.Select(gl => new LanguageViewModel(gl.Language)).ToList();
         PlatformAndPrices = game.GamePlatforms.Select(gp => new PlatformAndPriceViewModel(gp)).ToList();
+        RatingAverage = game.RatingAverage;
+        TotalRatings = game.TotalRatings;
     }
 
     public GameViewModel()

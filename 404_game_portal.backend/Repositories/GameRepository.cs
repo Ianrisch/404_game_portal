@@ -1,3 +1,4 @@
+using _404_game_portal.backend.Dto;
 using _404_game_portal.backend.Entities;
 using _404_game_portal.backend.Extensions;
 using _404_game_portal.backend.ViewModels;
@@ -7,11 +8,11 @@ namespace _404_game_portal.backend.Repositories;
 
 public interface IGameRepository
 {
-    public Game GetById(Guid id);
+    public GameDto GetById(Guid id);
 
-    public Game Create(GameCreationViewModel game);
-    public List<Game> GetAll();
-    List<Game> GetByIds(List<Guid> gameIds, bool includeAll = false);
+    public GameDto Create(GameCreationViewModel game);
+    public List<GameDto> GetAll();
+    List<GameDto> GetByIds(List<Guid> gameIds, bool includeAll = false);
 }
 
 public class GameRepository : IGameRepository
@@ -23,16 +24,17 @@ public class GameRepository : IGameRepository
         _context = context;
     }
 
-    public Game GetById(Guid id)
+    public GameDto GetById(Guid id)
     {
         return _context.Games
             .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
             .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
             .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
-            .SingleOrDefault(e => e.Id == id) ?? new Game();
+            .ToDto()
+            .SingleOrDefault(e => e.Id == id) ?? new GameDto();
     }
 
-    public Game Create(GameCreationViewModel creationViewModel)
+    public GameDto Create(GameCreationViewModel creationViewModel)
     {
         var game = new Game(creationViewModel)
         {
@@ -53,22 +55,24 @@ public class GameRepository : IGameRepository
         return GetById(game.Id);
     }
 
-    public List<Game> GetAll()
+    public List<GameDto> GetAll()
     {
         return _context.Games
             .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
             .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
             .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
+            .ToDto()
             .ToList();
     }
 
-    public List<Game> GetByIds(List<Guid> gameIds, bool includeAll = false)
+    public List<GameDto> GetByIds(List<Guid> gameIds, bool includeAll = false)
     {
         return _context.Games
             .IncludeIf(includeAll, e => e.GamePlatforms)
             .IncludeIf(includeAll, e => e.GameFeatures)
             .IncludeIf(includeAll, e => e.GameLanguages)
             .Where(e => gameIds.Contains(e.Id))
+            .ToDto()
             .ToList();
     }
 }
