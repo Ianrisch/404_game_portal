@@ -13,7 +13,6 @@ public class RatingController(IGameRatingRepository gameRatingRepository, IUserR
     : ControllerBase
 {
     [HttpPost]
-    [CustomAuthorize(Role.User)]
     public async Task<RatingViewModel> Rate([FromQuery] int rating, [FromQuery] Guid gameId)
     {
         var creationViewModel = new RatingCreationViewModel

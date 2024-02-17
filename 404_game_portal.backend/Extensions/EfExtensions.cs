@@ -15,6 +15,13 @@ public static class EfExtensions
     {
         return shouldInclude ? queryable.Include(navigationPropertyPath) : queryable;
     }
+    public static IQueryable<TEntity> WhereIf<TEntity>(
+        this IQueryable<TEntity> queryable,
+        bool shouldInclude,
+        Expression<Func<TEntity,bool>> predicate)
+    {
+        return shouldInclude ? queryable.Where(predicate) : queryable;
+    }
 
     public static IQueryable<GameDto> ToDto(this IQueryable<Game> queryable)
     {

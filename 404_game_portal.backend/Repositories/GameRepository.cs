@@ -1,6 +1,7 @@
 using _404_game_portal.backend.Dto;
 using _404_game_portal.backend.Entities;
 using _404_game_portal.backend.Extensions;
+using _404_game_portal.backend.Models;
 using _404_game_portal.backend.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ public interface IGameRepository
     public GameDto GetById(Guid id);
 
     public GameDto Create(GameCreationViewModel game);
-    public List<GameDto> GetAll();
+    public List<GameDto> GetAll(GameFilterOptions filterOptions);
     List<GameDto> GetByIds(List<Guid> gameIds, bool includeAll = false);
 }
 
@@ -55,14 +56,20 @@ public class GameRepository : IGameRepository
         return GetById(game.Id);
     }
 
-    public List<GameDto> GetAll()
+    public List<GameDto> GetAll(GameFilterOptions filterOptions)
     {
         return _context.Games
-            .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
-            .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
-            .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
-            .ToDto()
-            .ToList();
+                .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
+                .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
+                .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
+                .WhereIf(!string.IsNullOrEmpty(filterOptions.GameName), e => e.Name.Contains(filterOptions.GameName!))
+                .WhereIf(filterOptions.MaximumPrice.HasValue, e => e.GamePlatforms.Any(gp => gp.Price <= filterOptions.MaximumPrice))
+                .WhereIf(filterOptions.PlatformId.HasValue, e => e.GamePlatforms.Any(gp => gp.PlatformId == filterOptions.PlatformId))
+                .WhereIf(filterOptions.FeatureId.HasValue, e => e.GameFeatures.Any(gf => gf.FeatureId == filterOptions.FeatureId))
+                .WhereIf(filterOptions.LanguageId.HasValue, e => e.GameLanguages.Any(gl => gl.LanguageId == filterOptions.LanguageId))
+                .WhereIf(filterOptions.Usk.HasValue, e => e.USK == filterOptions.Usk)
+                .ToDto()
+                .ToList();
     }
 
     public List<GameDto> GetByIds(List<Guid> gameIds, bool includeAll = false)
