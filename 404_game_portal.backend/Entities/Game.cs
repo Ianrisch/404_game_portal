@@ -14,6 +14,7 @@ public class Game
     public List<GameFeature> GameFeatures { get; set; }
     public List<GameLanguage> GameLanguages { get; set; }
     public List<GameRating> GameRatings { get; set; }
+    public List<GameComment> GameComments { get; set; }
 
     public Game(GameCreationViewModel creationViewModel)
     {

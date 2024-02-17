@@ -66,6 +66,15 @@ public class Context : DbContext
             .HasOne(gf => gf.User)
             .WithMany(f => f.GameRatings)
             .HasForeignKey(gf => gf.UserId);
+        
+        modelBuilder.Entity<GameComment>()
+            .HasOne(gc => gc.Game)
+            .WithMany(g => g.GameComments)
+            .HasForeignKey(gc => gc.GameId);
+        modelBuilder.Entity<GameComment>()
+            .HasOne(gc => gc.User)
+            .WithMany(u => u.GameComments)
+            .HasForeignKey(gc => gc.UserId);
 
         modelBuilder.Entity<User>().HasIndex(u =>u.Email).IsUnique();
         modelBuilder.Entity<User>().HasIndex(u =>u.Username).IsUnique();
@@ -79,5 +88,6 @@ public class Context : DbContext
     public DbSet<GamePlatform> GamePlatforms { get; set; }
     public DbSet<GameLanguage> GameLanguages { get; set; }
     public DbSet<GameRating> GameRatings { get; set; }
+    public DbSet<GameComment> GameComments { get; set; }
     public DbSet<User> Users { get; set; }
 }
