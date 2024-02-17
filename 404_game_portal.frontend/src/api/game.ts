@@ -17,7 +17,8 @@ export type Game = {
   description: string;
   usk: USK;
   image: string;
-  rating: number;
+  ratingAverage: number;
+  totalRatings: number;
   releaseDate: Date;
   platformAndPrices: PlatformAndPrice[];
   features: Feature[];
