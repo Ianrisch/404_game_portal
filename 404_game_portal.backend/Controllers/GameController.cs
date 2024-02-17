@@ -15,7 +15,7 @@ public class GameController(IGameRepository gameRepository) : ControllerBase
     [HttpGet]
     public List<GameViewModel> GetAll([FromQuery] GameFilterOptions filterOptions)
     {
-        return gameRepository.GetAll(filterOptions ?? new GameFilterOptions())
+        return gameRepository.GetAll(filterOptions)
             .Select(game => new GameViewModel(game))
             .ToList();
     }

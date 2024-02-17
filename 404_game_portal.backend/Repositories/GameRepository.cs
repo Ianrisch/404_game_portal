@@ -52,24 +52,30 @@ public class GameRepository : IGameRepository
 
         _context.Games.Add(game);
         _context.SaveChanges();
-        
+
         return GetById(game.Id);
     }
 
     public List<GameDto> GetAll(GameFilterOptions filterOptions)
     {
         return _context.Games
-                .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
-                .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
-                .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
-                .WhereIf(!string.IsNullOrEmpty(filterOptions.GameName), e => e.Name.Contains(filterOptions.GameName!))
-                .WhereIf(filterOptions.MaximumPrice.HasValue, e => e.GamePlatforms.Any(gp => gp.Price <= filterOptions.MaximumPrice))
-                .WhereIf(filterOptions.PlatformId.HasValue, e => e.GamePlatforms.Any(gp => gp.PlatformId == filterOptions.PlatformId))
-                .WhereIf(filterOptions.FeatureId.HasValue, e => e.GameFeatures.Any(gf => gf.FeatureId == filterOptions.FeatureId))
-                .WhereIf(filterOptions.LanguageId.HasValue, e => e.GameLanguages.Any(gl => gl.LanguageId == filterOptions.LanguageId))
-                .WhereIf(filterOptions.Usk.HasValue, e => e.USK == filterOptions.Usk)
-                .ToDto()
-                .ToList();
+            .Include(e => e.GamePlatforms).ThenInclude(gp => gp.Platform)
+            .Include(e => e.GameFeatures).ThenInclude(gf => gf.Feature)
+            .Include(e => e.GameLanguages).ThenInclude(gl => gl.Language)
+            .WhereIf(!string.IsNullOrEmpty(filterOptions.GameName), e => e.Name.Contains(filterOptions.GameName!))
+            .WhereIf(filterOptions.PlatformId.HasValue,
+                e => e.GamePlatforms.Any(gp => gp.PlatformId == filterOptions.PlatformId))
+            .WhereIf(filterOptions.FeatureId.HasValue,
+                e => e.GameFeatures.Any(gf => gf.FeatureId == filterOptions.FeatureId))
+            .WhereIf(filterOptions.LanguageId.HasValue,
+                e => e.GameLanguages.Any(gl => gl.LanguageId == filterOptions.LanguageId))
+            .WhereIf(filterOptions.Usk.HasValue, e => e.USK == filterOptions.Usk)
+            .WhereIf(filterOptions.MaximumPrice.HasValue,
+                e => e.GamePlatforms.Any(gp =>
+                    gp.Price <= filterOptions.MaximumPrice && (!filterOptions.PlatformId.HasValue ||
+                                                               gp.PlatformId == filterOptions.PlatformId)))
+            .ToDto()
+            .ToList();
     }
 
     public List<GameDto> GetByIds(List<Guid> gameIds, bool includeAll = false)
