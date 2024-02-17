@@ -11,6 +11,7 @@ export enum USK {
   USK16,
   USK18,
 }
+
 export type Game = {
   id: number;
   name: string;
@@ -29,6 +30,14 @@ export type priceAndPlatformId = {
   platformId: string;
   price: number;
 };
+export type FilterOptions = {
+  usk?: USK;
+  gameName?: string;
+  maximumPrice?: number;
+  platformId?: string;
+  featureId?: string;
+  languageId?: string;
+};
 
 export type GameCreationData = {
   name: string;
@@ -40,7 +49,16 @@ export type GameCreationData = {
   languages: string[];
 };
 
-export const fetchGames = async (): Promise<Game[]> => httpClient.get('/api/game');
+export const fetchGames = async (options: FilterOptions): Promise<Game[]> =>
+  httpClient.get(
+    '/api/game?' +
+      (options.usk ? `usk=${options.usk}` : '') +
+      (options.gameName ? `&gameName=${options.gameName}` : '') +
+      (options.maximumPrice ? `&maximumPrice=${options.maximumPrice}` : '') +
+      (options.platformId ? `&platformId=${options.platformId}` : '') +
+      (options.featureId ? `&featureId=${options.featureId}` : '') +
+      (options.languageId ? `&languageId=${options.languageId}` : ''),
+  );
 export const fetchGame = async (id: string): Promise<Game> => httpClient.get(`/api/game/${id}`);
 export const createGame = async (data: GameCreationData): Promise<Game> =>
   httpClient.post(`/api/game`, data);

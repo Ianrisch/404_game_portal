@@ -2,13 +2,16 @@
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import GameCard from '@/components/GameCard.vue';
+import FilterBar from '@/components/FilterBar.vue';
+import { FilterOptions } from '@/api/game';
 
 const { loading, result, createPromise } = usePromise(api.fetchGames);
-createPromise();
+createPromise({});
 </script>
 
 <template>
   <div class="background">
+    <filter-bar @filter="(value: FilterOptions) => createPromise(value)" />
     <VList :loading="loading">
       <template v-if="result">
         <GameCard v-for="game in result" :key="game.id" :game="game" show-image />

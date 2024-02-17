@@ -34,4 +34,4 @@ export const createPlatform = async (data: PlatformCreationData): Promise<Platfo
 
 export const fetchPlatform = async (id: string): Promise<Platform> =>
   httpClient.get(`/api/platform/${id}`);
-export const fetchPlatforms = async (): Promise<Platform[]> => httpClient.get(`/api/platform}`);
+export const fetchPlatforms = async (): Promise<Platform[]> => httpClient.get(`/api/platform`);
