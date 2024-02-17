@@ -40,7 +40,7 @@ public class GameController : ControllerBase
         return new GameViewModel(_gameRepository.GetById(id));
     }
 
-    [HttpGet("rate")]
+    [HttpPost("rate")]
     [CustomAuthorize(Role.User)]
     public async Task<RatingViewModel> Rate([FromQuery]int rating, [FromQuery]Guid gameId)
     {
