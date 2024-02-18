@@ -82,12 +82,12 @@ watch(
         </v-col>
       </v-row>
     </v-card>
-    <rating-comment-card :game-id="result.id" />
     <v-card v-if="descriptionLengthExceeded" id="description">
       <h2>More information</h2>
       <v-spacer />
       <pre>{{ result.description }}</pre>
     </v-card>
+    <rating-comment-card :game-id="result.id" />
   </div>
 </template>
 
