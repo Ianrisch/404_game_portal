@@ -4,6 +4,7 @@ import { SubmitEventPromise } from 'vuetify';
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { useRouter } from 'vue-router';
+import rules from '@/util/roules';
 
 const router = useRouter();
 
@@ -11,7 +12,6 @@ const register = usePromise(api.register, () => {
   router.replace('/');
 });
 
-const rules = ref([(value: any) => !!value || 'Required']);
 const emailRule = (value: any) => {
   const pattern = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
   return pattern.test(value) || 'Invalid e-mail.';

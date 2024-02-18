@@ -2,7 +2,6 @@ import httpClient from '@/services/httpClient';
 import { Feature } from '@/api/feature';
 import { PlatformAndPrice } from '@/api/platformAndPrice';
 import { Language } from '@/api/language';
-import { da } from 'vuetify/locale';
 
 export enum USK {
   USK0,
@@ -26,7 +25,7 @@ export type Game = {
   languages: Language[];
 };
 
-export type priceAndPlatformId = {
+export type PriceAndPlatformId = {
   platformId: string;
   price: number;
 };
@@ -41,12 +40,13 @@ export type FilterOptions = {
 
 export type GameCreationData = {
   name: string;
-  platforms: priceAndPlatformId[];
+  platforms: PriceAndPlatformId[];
   usk: USK;
   releaseDate: Date;
   description: string;
   features: string[];
   languages: string[];
+  image: string;
 };
 
 export const fetchGames = async (options: FilterOptions): Promise<Game[]> =>
