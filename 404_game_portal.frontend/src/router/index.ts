@@ -49,6 +49,30 @@ const routes = [
     name: 'Admin',
     component: () => import('@/views/Admin.vue'),
     beforeEnter: [authorizeAdmin()],
+    children: [
+      {
+        path: '',
+        name: 'AdminHome',
+        component: () => import('@/views/AdminHome.vue'),
+      },
+      {
+        path: 'create/game',
+        name: 'CreateGame',
+        component: () => import('@/views/CreateGame.vue'),
+      },
+      {
+        path: 'create/language',
+        name: 'CreateLanguage',
+
+        component: () => import('@/views/CreateLanguage.vue'),
+      },
+      {
+        path: 'create/platform',
+        name: 'CreatePlatform',
+
+        component: () => import('@/views/CreatePlatform.vue'),
+      },
+    ],
   },
 ];
 
