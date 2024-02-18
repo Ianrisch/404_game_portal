@@ -8,6 +8,7 @@ namespace _404_game_portal.backend.Repositories;
 public interface IGameCommentRepository
 {
     GameComment GetById(Guid id);
+    List<GameComment> GetByGameId(Guid id);
     GameComment Create(CommentCreationDto creationDto);
     GameComment Update(CommentUpdateDto updateDto);
 }
@@ -24,8 +25,14 @@ public class GameCommentRepository : IGameCommentRepository
     public GameComment GetById(Guid id)
     {
         return _context.GameComments
-            .Include(gc => gc.Id)
             .SingleOrDefault(gc => gc.Id == id) ?? new GameComment();
+    }
+    
+    public List<GameComment> GetByGameId(Guid gameId)
+    {
+        return _context.GameComments
+            .Include()
+            .Where(gc => gc.GameId == gameId).ToList();
     }
 
     public GameComment Create(CommentCreationDto creationDto)

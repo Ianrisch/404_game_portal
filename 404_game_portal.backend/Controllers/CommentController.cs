@@ -1,5 +1,6 @@
 ﻿using _404_game_portal.backend.Attributes;
 using _404_game_portal.backend.Dto;
+using _404_game_portal.backend.Entities;
 using _404_game_portal.backend.Enums;
 using _404_game_portal.backend.Repositories;
 using _404_game_portal.backend.ViewModels;
@@ -10,7 +11,6 @@ namespace _404_game_portal.backend.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [CustomAuthorize(Role.User, Role.Admin)]
-
 public class CommentController(IGameCommentRepository gameCommentRepository, IUserRepository userRepository)
     : ControllerBase
 {
@@ -23,17 +23,20 @@ public class CommentController(IGameCommentRepository gameCommentRepository, IUs
         };
         return new CommentViewModel(gameCommentRepository.Create(dto));
     }
-    
+
     [HttpPut]
-    public CommentViewModel Update(CommentUpdateViewModel updateViewModel)
+    public async Task<CommentViewModel> Update(CommentUpdateViewModel updateViewModel)
     {
-        var dto = new CommentUpdateDto(updateViewModel);
+        var dto = new CommentUpdateDto(updateViewModel)
+        {
+            UserId = (await userRepository.GetByMailOrUsername(User.Identity!.Name!))!.Id,
+        };
         return new CommentViewModel(gameCommentRepository.Update(dto));
     }
 
     [HttpGet("{gameId:guid}")]
-    public CommentViewModel GetById(Guid gameId)
+    public List<GameComment> GetByGameId(Guid gameId)
     {
-        return new CommentViewModel(gameCommentRepository.GetById(gameId));
+        return gameCommentRepository.GetByGameId(gameId);
     }
 }
