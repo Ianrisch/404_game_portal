@@ -1,5 +1,6 @@
 ﻿using _404_game_portal.backend.Dto;
 using _404_game_portal.backend.Entities;
+using _404_game_portal.backend.Extensions;
 using _404_game_portal.backend.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,10 @@ namespace _404_game_portal.backend.Repositories;
 
 public interface IGameCommentRepository
 {
-    GameComment GetById(Guid id);
-    List<GameComment> GetByGameId(Guid id);
-    GameComment Create(CommentCreationDto creationDto);
-    GameComment Update(CommentUpdateDto updateDto);
+    GameCommentDto GetById(Guid id);
+    List<GameCommentDto> GetByGameId(Guid id);
+    GameCommentDto Create(CommentCreationDto creationDto);
+    GameCommentDto Update(CommentUpdateDto updateDto);
 }
 
 public class GameCommentRepository : IGameCommentRepository
@@ -22,20 +23,24 @@ public class GameCommentRepository : IGameCommentRepository
         _context = context;
     }
 
-    public GameComment GetById(Guid id)
+    public GameCommentDto GetById(Guid id)
     {
         return _context.GameComments
-            .SingleOrDefault(gc => gc.Id == id) ?? new GameComment();
-    }
-    
-    public List<GameComment> GetByGameId(Guid gameId)
-    {
-        return _context.GameComments
-            .Include()
-            .Where(gc => gc.GameId == gameId).ToList();
+            .Include(gc => gc.User)
+            .ToDto()
+            .SingleOrDefault(gc => gc.Id == id) ?? new GameCommentDto();
     }
 
-    public GameComment Create(CommentCreationDto creationDto)
+    public List<GameCommentDto> GetByGameId(Guid gameId)
+    {
+        return _context.GameComments
+            .Include(gc => gc.User)
+            .Where(gc => gc.GameId == gameId)
+            .ToDto()
+            .ToList();
+    }
+
+    public GameCommentDto Create(CommentCreationDto creationDto)
     {
         var gameComment = new GameComment
         {
@@ -48,11 +53,11 @@ public class GameCommentRepository : IGameCommentRepository
         return GetById(gameComment.Id);
     }
 
-    public GameComment Update(CommentUpdateDto updateDto)
+    public GameCommentDto Update(CommentUpdateDto updateDto)
     {
-        var gameComment = _context.GameComments.SingleOrDefault(gc =>
-            gc.Id == updateDto.Id && gc.UserId == updateDto.UserId);
-        
+        var gameComment = _context.GameComments
+            .SingleOrDefault(gc => gc.Id == updateDto.Id && gc.UserId == updateDto.UserId);
+
         gameComment.Comment = updateDto.Comment;
         _context.SaveChanges();
         return GetById(gameComment.Id);

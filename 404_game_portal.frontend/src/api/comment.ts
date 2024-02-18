@@ -5,8 +5,8 @@ import httpClient from '@/services/httpClient';
 export type Comment = {
   id: number;
   comment: string;
-  user: User;
-  game: Game;
+  userName: string;
+  userId: string;
 };
 
 export type CommentUpdateData = {

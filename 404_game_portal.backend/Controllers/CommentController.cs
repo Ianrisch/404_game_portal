@@ -4,6 +4,7 @@ using _404_game_portal.backend.Entities;
 using _404_game_portal.backend.Enums;
 using _404_game_portal.backend.Repositories;
 using _404_game_portal.backend.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _404_game_portal.backend.Controllers;
@@ -35,8 +36,11 @@ public class CommentController(IGameCommentRepository gameCommentRepository, IUs
     }
 
     [HttpGet("{gameId:guid}")]
-    public List<GameComment> GetByGameId(Guid gameId)
+    [AllowAnonymous]
+    public List<CommentViewModel> GetByGameId(Guid gameId)
     {
-        return gameCommentRepository.GetByGameId(gameId);
+        return gameCommentRepository.GetByGameId(gameId)
+            .Select(dto => new CommentViewModel(dto) )
+            .ToList();
     }
 }
