@@ -31,6 +31,7 @@ const submit = async (event: SubmitEventPromise) => {
             type="email"
             :rules="rules"
             v-model="emailOrUsername"
+            :error-messages="currentUserStore.loginError ? ['Invalid credentials'] : []"
           />
           <v-text-field
             class="passwordInput"
@@ -40,6 +41,7 @@ const submit = async (event: SubmitEventPromise) => {
             hide-details="auto"
             :rules="rules"
             v-model="password"
+            :error-messages="currentUserStore.loginError ? ['Invalid credentials'] : []"
           />
           <div class="loginButtons">
             <v-btn to="register" variant="plain">No account?</v-btn>

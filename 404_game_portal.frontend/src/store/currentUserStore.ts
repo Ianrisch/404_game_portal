@@ -25,5 +25,6 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
     fetchLogin: useIsLoggedIn.createPromise,
     logout: logout.createPromise,
     login: login.createPromise,
+    loginError: login.error,
   };
 });
