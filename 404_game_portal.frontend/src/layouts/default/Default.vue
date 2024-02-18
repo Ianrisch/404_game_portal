@@ -78,4 +78,8 @@ import Settings from '@/layouts/default/Settings.vue';
   @include noDrag;
   @include noSelect;
 }
+
+.v-footer {
+  max-height: 15%;
+}
 </style>
