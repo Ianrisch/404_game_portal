@@ -8,6 +8,4 @@ useDarkModeStore().initDarkMode();
   <Default />
 </template>
 
-<style lang="scss">
-@import '@/scss/main.scss';
-</style>
+<style lang="scss"></style>

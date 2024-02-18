@@ -90,14 +90,9 @@ const submit = async (event: SubmitEventPromise) => {
 
 <style scoped lang="scss">
 .background {
-  height: 100%;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background-image: url('@/assets/background.jpg');
-  background-size: cover;
 }
 .v-card {
   width: 25%;

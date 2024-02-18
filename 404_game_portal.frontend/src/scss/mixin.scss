@@ -13,6 +13,12 @@
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+@mixin background {
+  background-image: url('@/assets/background.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
 
 @mixin themeColor {
   color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
