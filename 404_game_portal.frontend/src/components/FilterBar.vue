@@ -10,6 +10,9 @@ import { Platform } from '@/api/platformAndPrice';
 const emit = defineEmits<{
   (e: 'filter', value: FilterOptions): void;
 }>();
+defineProps<{
+  loading?: boolean;
+}>();
 
 const filterOptions = ref<FilterOptions>({
   gameName: undefined,
@@ -41,7 +44,12 @@ const form = ref();
 </script>
 
 <template>
-  <v-form ref="form" @submit.prevent="$emit('filter', filterOptions)">
+  <v-form
+    ref="form"
+    @submit.prevent="$emit('filter', filterOptions)"
+    :disabled="loading"
+    :loading="loading"
+  >
     <v-expand-transition>
       <v-card class="filter-bar" v-if="show">
         <v-row>
@@ -123,8 +131,17 @@ const form = ref();
       :text="show ? 'Hide Filters' : 'Show Filters'"
       variant="text"
     />
-    <v-btn v-if="show" variant="text" text="Submit" type="submit" />
     <v-btn
+      v-if="show"
+      variant="text"
+      text="Submit"
+      type="submit"
+      :disabled="loading"
+      :loading="loading"
+    />
+    <v-btn
+      :disabled="loading"
+      :loading="loading"
       v-if="show"
       @click="
         () => {

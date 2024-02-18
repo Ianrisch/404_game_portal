@@ -11,10 +11,30 @@ createPromise({});
 
 <template>
   <div class="background">
-    <filter-bar @filter="(value: FilterOptions) => createPromise(value)" />
-    <VList :loading="loading">
-      <template v-if="result">
-        <GameCard v-for="game in result" :key="game.id" :game="game" show-image />
+    <filter-bar :loading="loading" @filter="(value: FilterOptions) => createPromise(value)" />
+    <VList>
+      <template v-if="result && !loading">
+        <GameCard
+          v-for="game in result"
+          :key="game.id"
+          :game="game"
+          show-image
+          :loading="loading"
+          :disabled="loading"
+        />
+      </template>
+      <template v-else>
+        <v-skeleton-loader
+          v-for="a in 10"
+          :elevation="24"
+          width="300"
+          :loading="true"
+          class="mx-auto"
+          max-width="300"
+          height="312"
+          type="image, article"
+          style="margin-bottom: 15px"
+        />
       </template>
     </VList>
   </div>

@@ -8,13 +8,15 @@ import StarBar from '@/components/StarBar.vue';
 defineProps<{
   game: Game;
   showImage?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
 }>();
 
 const show = ref(false);
 </script>
 
 <template>
-  <v-card class="mx-auto" width="300px">
+  <v-card class="mx-auto" width="300px" :loading="loading" :disabled="disabled">
     <v-window v-model="show" class="">
       <v-window-item :value="false">
         <div>
