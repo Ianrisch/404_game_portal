@@ -57,6 +57,7 @@ import Settings from '@/layouts/default/Settings.vue';
 @import '@/scss/mixin.scss';
 .v-app-bar {
   position: fixed !important;
+  top: 0 !important;
 }
 
 .logo {
