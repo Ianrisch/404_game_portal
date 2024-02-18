@@ -39,4 +39,19 @@ public static class EfExtensions
             TotalRatings = g.GameRatings.Count
         });
     }
+    
+    public static IQueryable<GameCommentDto> ToDto(this IQueryable<GameComment> queryable)
+    {
+        return queryable.Select(gc => new GameCommentDto
+        {
+            Id = gc.Id,
+            GameId = gc.GameId,
+            Comment = gc.Comment,
+            UserDto = new GameCommentUserDto()
+            {
+                Id = gc.User.Id,
+                Username = gc.User.Username
+            }
+        });
+    }
 }
