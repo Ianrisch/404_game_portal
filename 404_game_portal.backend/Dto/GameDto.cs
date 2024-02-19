@@ -11,6 +11,7 @@ public class GameDto
     public Usk USK { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public string Description { get; set; }
+    public string Image { get; set; }
     public List<GameFeature> GameFeatures { get; set; }
     public List<GameLanguage> GameLanguages { get; set; }
     public double RatingAverage { get; set; }

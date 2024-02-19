@@ -33,6 +33,7 @@ public static class EfExtensions
             USK = g.USK,
             ReleaseDate = g.ReleaseDate,
             Description = g.Description,
+            Image = g.Image,
             GameFeatures = g.GameFeatures,
             GameLanguages = g.GameLanguages,
             RatingAverage = g.GameRatings.Count == 0 ? 0 : g.GameRatings.Average(gr => gr.Rating),

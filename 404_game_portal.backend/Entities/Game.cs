@@ -11,6 +11,7 @@ public class Game
     public Usk USK { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public string Description { get; set; }
+    public string Image { get; set; }
     public List<GameFeature> GameFeatures { get; set; }
     public List<GameLanguage> GameLanguages { get; set; }
     public List<GameRating> GameRatings { get; set; }
@@ -22,6 +23,7 @@ public class Game
         USK = creationViewModel.USK;
         ReleaseDate = creationViewModel.ReleaseDate;
         Description = creationViewModel.Description;
+        Image = creationViewModel.Image;
     }
 
     public Game()

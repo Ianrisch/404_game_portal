@@ -11,6 +11,7 @@ public class GameViewModel
     public Usk USK { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public string Description { get; set; }
+    public string Image { get; set; }
     public List<FeatureViewModel> Features { get; set; }
     public List<LanguageViewModel> Languages { get; set; }
     public double RatingAverage { get; set; }
@@ -24,6 +25,7 @@ public class GameViewModel
         USK = game.USK;
         ReleaseDate = game.ReleaseDate;
         Description = game.Description;
+        Image = game.Image;
         Features = game.GameFeatures.Select(gf => new FeatureViewModel(gf.Feature)).ToList();
         Languages = game.GameLanguages.Select(gl => new LanguageViewModel(gl.Language)).ToList();
         PlatformAndPrices = game.GamePlatforms.Select(gp => new PlatformAndPriceViewModel(gp)).ToList();

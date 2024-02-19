@@ -9,6 +9,7 @@ public class GameCreationViewModel
     public Usk USK { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public string Description { get; set; }
+    public string Image { get; set; }
     public List<Guid> Features { get; set; }
     public List<Guid> Languages { get; set; }
 }
