@@ -32,7 +32,11 @@ watch(
       <v-row>
         <v-col cols="8">
           <v-img
-            :src="result.image ?? 'https://picsum.photos/1920/1080/?random=' + result.id"
+            :src="
+              result.image.length == 0
+                ? 'https://picsum.photos/1920/1080/?random=' + result.id
+                : result.image
+            "
             alt="test"
             width="100%"
           />

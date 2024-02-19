@@ -23,7 +23,9 @@ const show = ref(false);
           <div class="shadow">
             <v-img
               v-if="showImage"
-              :src="game.image ?? 'https://picsum.photos/1000?random=' + game.id"
+              :src="
+                game.image.length == 0 ? 'https://picsum.photos/1000?random=' + game.id : game.image
+              "
               height="200px"
               cover
             />
