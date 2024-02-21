@@ -1,5 +1,6 @@
 import httpClient from '@/services/httpClient';
 import { Game, GameCreationData } from '@/api/game';
+import { IdAndPrice, Price } from '@/types/IdAndPrice';
 
 export type PlatformAndPrice = {
   id: string;
@@ -17,13 +18,8 @@ export type Platform = {
   platformType: string;
 };
 
-export type GameAndPrice = {
-  gameId: string;
-  price: number;
-};
-
 export type PlatformCreationData = {
-  gamesAndPrices: GameAndPrice[];
+  gamesAndPrices: IdAndPrice[];
   platformName: string;
   platformVersion: string;
   platformType: string;

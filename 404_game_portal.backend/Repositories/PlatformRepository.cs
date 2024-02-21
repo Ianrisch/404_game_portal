@@ -36,7 +36,7 @@ public class PlatformRepository : IPlatformRepository
             PlatformType = creationViewModel.PlatformType,
             GamePlatforms = creationViewModel.GamesAndPrices.Select(priceAndPlatformViewModel => new GamePlatform
             {
-                GameId = priceAndPlatformViewModel.GameId,
+                GameId = priceAndPlatformViewModel.Id,
                 Price = priceAndPlatformViewModel.Price
             }).ToList()
         };

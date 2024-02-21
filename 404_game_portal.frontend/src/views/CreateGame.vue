@@ -2,11 +2,12 @@
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { computed, ref } from 'vue';
-import { type GameCreationData, PriceAndPlatformId, USK } from '@/api/game';
+import { type GameCreationData, USK } from '@/api/game';
 import rules from '@/util/roules';
-import { Platform, PlatformAndPrice } from '@/api/platformAndPrice';
-import PlatformAndPriceCombiner from '@/components/PlatformAndPriceCombiner.vue';
+import { Platform } from '@/api/platformAndPrice';
+import PriceCombiner from '@/components/PriceCombiner.vue';
 import { SubmitEventPromise } from 'vuetify';
+import { da } from 'vuetify/locale';
 
 const useCreateGame = usePromise(api.createGame);
 const createLoading = useCreateGame.loading;
@@ -97,8 +98,11 @@ const submit = async (event: SubmitEventPromise) => {
           :loading="createLoading"
           :disabled="createLoading"
         />
-        <platform-and-price-combiner
-          :platforms="chosenPlatforms"
+        <price-combiner
+          :items="chosenPlatforms"
+          :item-title="
+            (i: Platform) => i.platformName + ' ' + i.platformVersion + ' - ' + i.platformType
+          "
           @update="(data) => (creationModel.platforms = data)"
         />
         <v-select

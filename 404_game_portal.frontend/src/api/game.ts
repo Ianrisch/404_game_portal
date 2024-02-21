@@ -2,6 +2,7 @@ import httpClient from '@/services/httpClient';
 import { Feature } from '@/api/feature';
 import { PlatformAndPrice } from '@/api/platformAndPrice';
 import { Language } from '@/api/language';
+import { IdAndPrice } from '@/types/IdAndPrice';
 
 export enum USK {
   USK0,
@@ -25,10 +26,6 @@ export type Game = {
   languages: Language[];
 };
 
-export type PriceAndPlatformId = {
-  platformId: string;
-  price: number;
-};
 export type FilterOptions = {
   usk?: USK;
   gameName?: string;
@@ -40,7 +37,7 @@ export type FilterOptions = {
 
 export type GameCreationData = {
   name: string;
-  platforms: PriceAndPlatformId[];
+  platforms: IdAndPrice[];
   usk: USK;
   releaseDate: Date;
   description: string;

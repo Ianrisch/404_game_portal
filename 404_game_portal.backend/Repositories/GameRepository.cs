@@ -41,7 +41,7 @@ public class GameRepository : IGameRepository
         {
             GamePlatforms = creationViewModel.Platforms.Select(priceAndPlatformViewModel => new GamePlatform
                 {
-                    PlatformId = priceAndPlatformViewModel.PlatformId,
+                    PlatformId = priceAndPlatformViewModel.Id,
                     Price = priceAndPlatformViewModel.Price
                 })
                 .ToList(),
