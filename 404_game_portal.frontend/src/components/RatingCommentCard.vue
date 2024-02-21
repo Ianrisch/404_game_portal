@@ -6,6 +6,8 @@ import { Rating } from '@/api/rating';
 import { ref } from 'vue';
 import CommentSection from '@/components/CommentSection.vue';
 import { SubmitEventPromise } from 'vuetify';
+import { useCurrentUserStore } from '@/store/currentUserStore';
+import { Role } from '@/api/auth';
 
 const props = defineProps<{
   gameId: string;
@@ -33,11 +35,20 @@ const submit = async (event: SubmitEventPromise) => {
   }
   commentText.value = '';
 };
+
+const currentUserStore = useCurrentUserStore();
 </script>
 
 <template>
   <v-card :loading="getRating.loading.value">
-    <v-row>
+    <h2>Comments</h2>
+    <v-row
+      v-if="
+        currentUserStore.isLoggedIn &&
+        currentUserStore.user &&
+        currentUserStore.user!.role >= Role.User
+      "
+    >
       <v-col cols="8">
         <v-form @submit.prevent="submit">
           <v-textarea label="Comment" v-model="commentText" :rules="rules" />
