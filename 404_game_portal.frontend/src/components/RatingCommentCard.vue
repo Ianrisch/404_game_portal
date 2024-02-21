@@ -3,15 +3,18 @@ import usePromise from '@/composables/usePromise';
 import StarBar from '@/components/StarBar.vue';
 import api from '@/api';
 import { Rating } from '@/api/rating';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import CommentSection from '@/components/CommentSection.vue';
 import { SubmitEventPromise } from 'vuetify';
 import { useCurrentUserStore } from '@/store/currentUserStore';
 import { Role } from '@/api/auth';
+import rules from '@/util/roules';
 
 const props = defineProps<{
   gameId: string;
 }>();
+const currentUserStore = useCurrentUserStore();
+const shouldReload = ref(true);
 const rating = ref<Rating>();
 
 const createRating = usePromise(api.createRating, (result) => {
@@ -20,23 +23,28 @@ const createRating = usePromise(api.createRating, (result) => {
 const getRating = usePromise(api.fetchRating, (result) => {
   rating.value = result;
 });
+watch(
+  () => currentUserStore.isLoggedIn,
+  () => {
+    getRating.createPromise(props.gameId);
+    shouldReload.value = true;
+  },
+  { immediate: true },
+);
 
-getRating.createPromise(props.gameId);
-
-const rules = ref([(value: any) => !!value || 'Required']);
 const commentText = ref<string>('');
-const createComment = usePromise(api.createComment);
+const createComment = usePromise(api.createComment, () => {
+  shouldReload.value = true;
+});
 const submit = async (event: SubmitEventPromise) => {
   if ((await event).valid) {
-    createComment.createPromise({
+    await createComment.createPromise({
       comment: commentText.value,
       gameId: props.gameId,
     });
   }
   commentText.value = '';
 };
-
-const currentUserStore = useCurrentUserStore();
 </script>
 
 <template>
@@ -46,7 +54,7 @@ const currentUserStore = useCurrentUserStore();
       v-if="
         currentUserStore.isLoggedIn &&
         currentUserStore.user &&
-        currentUserStore.user!.role >= Role.User
+        currentUserStore.user.role >= Role.User
       "
     >
       <v-col cols="8">
@@ -65,7 +73,7 @@ const currentUserStore = useCurrentUserStore();
         </v-btn>
       </v-col>
     </v-row>
-    <comment-section :game-id="gameId" />
+    <comment-section v-model:should-reload="shouldReload" :game-id="gameId" />
   </v-card>
 </template>
 

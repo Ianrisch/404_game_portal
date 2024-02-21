@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
+import { watch } from 'vue';
 
 const props = defineProps<{
   gameId: string;
 }>();
+const shouldReload = defineModel<boolean>('shouldReload', { default: true });
 
-const { loading, result, createPromise } = usePromise(api.fetchComments);
-createPromise(props.gameId);
+const { loading, result, createPromise } = usePromise(api.fetchComments, () => {
+  shouldReload.value = false;
+});
+
+watch(
+  shouldReload,
+  (newValue) => {
+    if (newValue) createPromise(props.gameId);
+  },
+  { immediate: true },
+);
 </script>
 
 <template v-if="result">
