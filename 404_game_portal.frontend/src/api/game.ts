@@ -52,7 +52,7 @@ export type GameCreationData = {
 export const fetchGames = async (options: FilterOptions): Promise<Game[]> =>
   httpClient.get(
     '/api/game?' +
-      (options.usk ? `usk=${options.usk}` : '') +
+      (options.usk != undefined ? `usk=${options.usk}` : '') +
       (options.gameName ? `&gameName=${options.gameName}` : '') +
       (options.maximumPrice != undefined ? `&maximumPrice=${options.maximumPrice}` : '') +
       (options.platformId ? `&platformId=${options.platformId}` : '') +
