@@ -103,6 +103,8 @@ const submit = async (event: SubmitEventPromise) => {
           :item-title="
             (i: Platform) => i.platformName + ' ' + i.platformVersion + ' - ' + i.platformType
           "
+          :loading="createLoading"
+          :disabled="createLoading"
           @update="(data) => (creationModel.platforms = data)"
         />
         <v-select
