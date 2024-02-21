@@ -32,7 +32,7 @@ public class LanguageRepository : ILanguageRepository
         var language = new Language
         {
             LanguageName = creationViewModel.LanguageName,
-            GameLanguages = creationViewModel.Games?.Select(id => new GameLanguage { GameId = id }).ToList() ?? []
+            GameLanguages = creationViewModel.GameIds?.Select(id => new GameLanguage { GameId = id }).ToList() ?? []
         };
         _context.Languages.Add(language);
         _context.SaveChanges();

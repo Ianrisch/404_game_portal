@@ -25,4 +25,8 @@ div.sticky {
 .router-view {
   padding-top: 41px;
 }
+.v-card {
+  margin: 5px auto;
+  padding: 5px;
+}
 </style>

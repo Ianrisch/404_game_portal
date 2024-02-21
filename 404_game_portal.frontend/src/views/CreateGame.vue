@@ -139,12 +139,4 @@ const submit = async (event: SubmitEventPromise) => {
   </v-card>
 </template>
 
-<style scoped lang="scss">
-.v-card {
-  margin: 5px auto;
-  padding: 5px;
-}
-.v-input {
-  margin-bottom: 5px;
-}
-</style>
+<style scoped lang="scss"></style>
