@@ -129,16 +129,8 @@ const form = ref();
       @click="show = !show"
       prepend-icon="mdi-filter"
       :text="show ? 'Hide Filters' : 'Show Filters'"
-      variant="text"
     />
-    <v-btn
-      v-if="show"
-      variant="text"
-      text="Submit"
-      type="submit"
-      :disabled="loading"
-      :loading="loading"
-    />
+    <v-btn v-if="show" text="Submit" type="submit" :disabled="loading" :loading="loading" />
     <v-btn
       :disabled="loading"
       :loading="loading"
@@ -157,7 +149,6 @@ const form = ref();
           selectedPlatform = undefined;
         }
       "
-      variant="text"
       text="Clear"
     />
   </v-form>
@@ -166,6 +157,5 @@ const form = ref();
 <style scoped lang="scss">
 .filter-bar {
   padding: 15px 20px;
-  background: transparent;
 }
 </style>
