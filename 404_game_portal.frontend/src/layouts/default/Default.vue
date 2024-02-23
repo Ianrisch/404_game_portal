@@ -34,7 +34,7 @@ import Settings from '@/layouts/default/Settings.vue';
                 Das 404 GamePortal ist ein Projekt von Ian Risch & Julius Lange für das Pflichtfach
                 Dynamische Webseiten der Carl Benz Berufschule
               </v-card-text>
-              <v-img src="@/assets/background.jpg" alt="test" width="100%"></v-img>
+              <v-img src="@/assets/background-dark.jpg" alt="test" width="100%"></v-img>
             </v-card> </v-dialog
         ></v-btn>
         <v-btn
