@@ -57,13 +57,13 @@ const submit = async (event: SubmitEventPromise) => {
         currentUserStore.user.role >= Role.User
       "
     >
-      <v-col cols="8">
+      <v-col cols="12" md="8">
         <v-form @submit.prevent="submit">
           <v-textarea label="Comment" v-model="commentText" :rules="rules" />
           <v-btn type="submit">Submit comment</v-btn>
         </v-form>
       </v-col>
-      <v-col cols="4" v-if="rating">
+      <v-col cols="12" md="4" v-if="rating">
         <star-bar click-enabled v-model:rating="rating.rating" />
         <v-btn
           @click="createRating.createPromise({ rating: rating.rating, gameId: gameId })"
