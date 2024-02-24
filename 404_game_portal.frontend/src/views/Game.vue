@@ -30,7 +30,7 @@ watch(
         <h1>{{ result.name }}</h1>
       </v-row>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="12" md="8">
           <v-img
             :src="
               result.image.length == 0
@@ -41,7 +41,7 @@ watch(
             width="100%"
           />
         </v-col>
-        <v-col cols="4">
+        <v-col cols="12" md="4">
           <description-shortener
             :description="result.description"
             v-model:description-length-exceeded="descriptionLengthExceeded"
@@ -110,6 +110,10 @@ h1 {
   margin-top: 15px;
   padding: 10px;
   width: 60%;
+
+  @media only screen and (max-width: 600px) {
+    width: 95%;
+  }
 
   &:first-of-type {
     margin-top: 2%;
