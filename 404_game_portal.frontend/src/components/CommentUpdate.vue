@@ -45,7 +45,10 @@ const submit = async (event: SubmitEventPromise) => {
     <v-card>
       <v-form @submit.prevent="submit">
         <v-textarea label="Comment" v-model="updatedCommentText" :rules="rules" />
-        <v-btn @click="showDialog = false" type="submit">Save changes</v-btn>
+        <div class="actions">
+          <v-btn @click="showDialog = false" type="submit">Save changes</v-btn>
+          <v-btn @click="showDialog = false">Cancel</v-btn>
+        </div>
       </v-form>
     </v-card>
   </v-dialog>
@@ -57,6 +60,11 @@ const submit = async (event: SubmitEventPromise) => {
   .v-card {
     padding: 10px;
     background-color: #222;
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+    }
   }
 }
 </style>
