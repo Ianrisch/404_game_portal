@@ -33,6 +33,7 @@ export type FilterOptions = {
   platformId?: string;
   featureId?: string;
   languageId?: string;
+  minRating?: number;
 };
 
 export type GameCreationData = {
@@ -54,7 +55,8 @@ export const fetchGames = async (options: FilterOptions): Promise<Game[]> =>
       (options.maximumPrice != undefined ? `&maximumPrice=${options.maximumPrice}` : '') +
       (options.platformId ? `&platformId=${options.platformId}` : '') +
       (options.featureId ? `&featureId=${options.featureId}` : '') +
-      (options.languageId ? `&languageId=${options.languageId}` : ''),
+      (options.languageId ? `&languageId=${options.languageId}` : '') +
+      (options.minRating != undefined ? `&minRating=${options.minRating}` : ''),
   );
 export const fetchGame = async (id: string): Promise<Game> => httpClient.get(`/api/game/${id}`);
 export const createGame = async (data: GameCreationData): Promise<Game> =>
