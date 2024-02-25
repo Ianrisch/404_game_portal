@@ -41,6 +41,7 @@ watch(
               comment.userName === currentUserStore.user?.username
             "
             :comment="comment"
+            @update-comments="shouldReload = true"
           />
         </div>
       </v-card>

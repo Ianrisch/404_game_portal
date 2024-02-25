@@ -14,7 +14,11 @@ const showDialog = ref<boolean>(false);
 const updatedCommentText = ref<string>('');
 const commentId = ref<string>('');
 
-const updateComment = usePromise(api.updateComment);
+const emit = defineEmits<{
+  (e: 'updateComments'): void;
+}>();
+
+const updateComment = usePromise(api.updateComment, () => emit('updateComments'));
 const submit = async (event: SubmitEventPromise) => {
   if ((await event).valid) {
     await updateComment.createPromise({
