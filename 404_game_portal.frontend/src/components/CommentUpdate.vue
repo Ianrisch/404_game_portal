@@ -30,23 +30,25 @@ const submit = async (event: SubmitEventPromise) => {
 </script>
 
 <template>
-  <v-btn
-    variant="flat"
-    @click="
-      updatedCommentText = comment.comment;
-      commentId = comment.id;
-    "
-  >
-    <v-avatar icon="mdi-pencil" />
-    <v-dialog v-model="showDialog" activator="parent">
-      <v-card>
-        <v-form @submit.prevent="submit">
-          <v-textarea label="Comment" v-model="updatedCommentText" :rules="rules" />
-          <v-btn @click="showDialog = false" type="submit">Save changes</v-btn>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-btn>
+  <v-dialog v-model="showDialog">
+    <template #activator="{ props }">
+      <v-btn
+        variant="flat"
+        @click="
+          updatedCommentText = comment.comment;
+          commentId = comment.id;
+        "
+        icon="mdi-pencil"
+        v-bind="props"
+      />
+    </template>
+    <v-card>
+      <v-form @submit.prevent="submit">
+        <v-textarea label="Comment" v-model="updatedCommentText" :rules="rules" />
+        <v-btn @click="showDialog = false" type="submit">Save changes</v-btn>
+      </v-form>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped lang="scss">
