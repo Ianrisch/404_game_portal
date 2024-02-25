@@ -29,20 +29,24 @@ watch(
   <v-row>
     <v-col>
       <v-card class="commentCard" v-for="comment in result" :key="comment.id" :loading="loading">
-        <p>{{ comment.comment }}</p>
-        <div class="controls">
-          <p class="commentBy">
-            Commented by <span class="user">{{ comment.userName }}</span>
-          </p>
-          <comment-update
-            v-if="
-              currentUserStore.isLoggedIn &&
-              currentUserStore.user &&
-              comment.userName === currentUserStore.user?.username
-            "
-            :comment="comment"
-            @update-comments="shouldReload = true"
-          />
+        <div class="contents">
+          <div>
+            <p>{{ comment.comment }}</p>
+            <p class="commentBy">
+              Commented by <span class="user">{{ comment.userName }}</span>
+            </p>
+          </div>
+          <div>
+            <comment-update
+              v-if="
+                currentUserStore.isLoggedIn &&
+                currentUserStore.user &&
+                comment.userName === currentUserStore.user?.username
+              "
+              :comment="comment"
+              @update-comments="shouldReload = true"
+            />
+          </div>
         </div>
       </v-card>
     </v-col>
@@ -52,12 +56,9 @@ watch(
 <style scoped lang="scss">
 .commentCard {
   width: 100%;
-  margin: 5px;
   padding: 10px;
-
-  .controls {
+  .contents {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     .commentBy {
       font-style: italic;
