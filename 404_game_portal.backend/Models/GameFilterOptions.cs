@@ -10,4 +10,5 @@ public class GameFilterOptions
     public Guid? FeatureId { get; set; }
     public Guid? LanguageId { get; set; }
     public Usk? Usk { get; set; }
+    public double? MinRating { get; set; }
 }

@@ -74,8 +74,11 @@ public class GameRepository : IGameRepository
                 e => e.GamePlatforms.Any(gp =>
                     gp.Price <= filterOptions.MaximumPrice && (!filterOptions.PlatformId.HasValue ||
                                                                gp.PlatformId == filterOptions.PlatformId)))
+            .WhereIf(filterOptions.MinRating is > 0 and <= 5,
+                e => e.GameRatings.Average(r => r.Rating) >= filterOptions.MinRating)
             .OrderByDescending(e => e.GameRatings.Average(r => r.Rating))
             .ThenByDescending(e => e.GameRatings.Count)
+            .ThenBy(e => e.Name)
             .ToDto()
             .ToList();
     }
