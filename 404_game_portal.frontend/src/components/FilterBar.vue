@@ -21,6 +21,7 @@ const filterOptions = ref<FilterOptions>({
   platformId: undefined,
   featureId: undefined,
   languageId: undefined,
+  minRating: undefined,
 });
 
 const platforms = usePromise(api.fetchPlatforms);
@@ -88,6 +89,23 @@ const form = ref();
               </template>
             </v-slider>
           </v-col>
+          <v-col cols="3">
+            <div>Minimum Rating</div>
+            <v-slider v-model="filterOptions.minRating" :max="5" :step="0.5" hide-details="auto">
+              <template #append>
+                <v-text-field
+                  v-model="filterOptions.minRating"
+                  type="number"
+                  :rules="[(v: any) => (v >= 0 && v <= 5) || 'Rating must be between 0 and 5']"
+                  style="width: 110px"
+                  density="compact"
+                  variant="outlined"
+                  hide-details="auto"
+                  :clearable="true"
+                />
+              </template>
+            </v-slider>
+          </v-col>
           <v-col cols="2">
             <v-combobox
               v-model="selectedPlatform"
@@ -140,6 +158,7 @@ const form = ref();
           filterOptions.gameName = undefined;
           filterOptions.usk = undefined;
           filterOptions.maximumPrice = undefined;
+          filterOptions.minRating = undefined;
 
           filterOptions.platformId = undefined;
           filterOptions.featureId = undefined;
