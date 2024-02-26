@@ -13,7 +13,7 @@ public class RatingController(IGameRatingRepository gameRatingRepository, IUserR
     : ControllerBase
 {
     [HttpPost]
-    public async Task<RatingViewModel> Rate([FromQuery] int rating, [FromQuery] Guid gameId)
+    public async Task<RatingViewModel> Rate([FromQuery] double rating, [FromQuery] Guid gameId)
     {
         var creationViewModel = new RatingCreationViewModel
         {

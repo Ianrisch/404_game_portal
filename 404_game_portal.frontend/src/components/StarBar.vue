@@ -26,8 +26,12 @@ const determineIcon = (rating: number, starPosition: number) => {
       :ripple="false"
       size="40px"
       :icon="tempRating ? determineIcon(tempRating, a) : determineIcon(rating, a)"
-      @click="rating = a"
-      @mouseover="tempRating = a"
+      @click="rating = tempRating ?? a"
+      @mousemove="
+        (event: MouseEvent) => {
+          tempRating = event.offsetX > 15 ? a : a - 0.5;
+        }
+      "
       @mouseleave="tempRating = undefined"
       :disabled="!clickEnabled"
     />
