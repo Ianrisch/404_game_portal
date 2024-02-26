@@ -54,7 +54,7 @@ const form = ref();
     <v-expand-transition>
       <v-card class="filter-bar" v-if="show">
         <v-row>
-          <v-col cols="3">
+          <v-col cols="12" md="3">
             <v-text-field
               label="Game Name"
               v-model="filterOptions.gameName"
@@ -62,7 +62,7 @@ const form = ref();
               :clearable="true"
             />
           </v-col>
-          <v-col cols="2">
+          <v-col cols="12" md="2">
             <v-combobox
               v-model="filterOptions.usk"
               :items="Object.values(USK).filter((u) => typeof u == 'number')"
@@ -73,7 +73,7 @@ const form = ref();
               :clearable="true"
             />
           </v-col>
-          <v-col cols="3">
+          <v-col cols="12" md="3">
             <div>Maximum Price</div>
             <v-slider v-model="filterOptions.maximumPrice" :max="300" :step="1" hide-details="auto">
               <template #append>
@@ -89,7 +89,7 @@ const form = ref();
               </template>
             </v-slider>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="12" md="3">
             <div>Minimum Rating</div>
             <v-slider v-model="filterOptions.minRating" :max="5" :step="0.5" hide-details="auto">
               <template #append>
@@ -109,7 +109,7 @@ const form = ref();
               </template>
             </v-slider>
           </v-col>
-          <v-col cols="2">
+          <v-col cols="6" md="2">
             <v-combobox
               v-model="selectedPlatform"
               @update:modelValue="(value: any) => (filterOptions.platformId = value?.id)"
@@ -121,7 +121,7 @@ const form = ref();
             />
           </v-col>
 
-          <v-col cols="2">
+          <v-col cols="6" md="2">
             <v-combobox
               v-model="selectedFeature"
               @update:modelValue="(value: any) => (filterOptions.featureId = value?.id)"
@@ -132,7 +132,7 @@ const form = ref();
               :clearable="true"
             />
           </v-col>
-          <v-col cols="2">
+          <v-col cols="6" md="2">
             <v-combobox
               v-model="selectedLanguage"
               @update:modelValue="(value: any) => (filterOptions.languageId = value?.id)"
