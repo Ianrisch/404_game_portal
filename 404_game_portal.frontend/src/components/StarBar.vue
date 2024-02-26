@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import usePromise from '@/composables/usePromise';
 
 const rating = defineModel<number>('rating', { default: 0 });
 const tempRating = ref<number>();
