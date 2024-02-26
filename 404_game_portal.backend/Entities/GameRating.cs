@@ -6,5 +6,5 @@ public class GameRating
     public Guid UserId { get; set; }
     public Game Game { get; set; }
     public Guid GameId { get; set; }
-    public int Rating { get; set; }
+    public double Rating { get; set; }
 }
