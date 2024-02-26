@@ -96,7 +96,10 @@ const form = ref();
                 <v-text-field
                   v-model="filterOptions.minRating"
                   type="number"
-                  :rules="[(v: any) => (v >= 0 && v <= 5) || 'Rating must be between 0 and 5']"
+                  :rules="[
+                    (v: any) =>
+                      (v >= 0 && v <= 5) || v === undefined || 'Rating must be between 0 and 5',
+                  ]"
                   style="width: 110px"
                   density="compact"
                   variant="outlined"
