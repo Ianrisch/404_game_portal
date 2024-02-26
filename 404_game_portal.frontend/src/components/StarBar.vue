@@ -9,6 +9,13 @@ const props = defineProps<{
 }>();
 
 const cursor = computed(() => (props.clickEnabled ? 'pointer' : 'default'));
+const determineIcon = (rating: number, starPosition: number) => {
+  return rating - starPosition >= 0
+    ? 'mdi-star'
+    : rating - starPosition >= -0.5
+      ? 'mdi-star-half-full'
+      : 'mdi-star-outline';
+};
 </script>
 
 <template>
@@ -19,19 +26,7 @@ const cursor = computed(() => (props.clickEnabled ? 'pointer' : 'default'));
       variant="plain"
       :ripple="false"
       size="40px"
-      :icon="
-        tempRating
-          ? tempRating - a >= 0
-            ? 'mdi-star'
-            : tempRating - a >= -0.5
-              ? 'mdi-star-half-full'
-              : 'mdi-star-outline'
-          : rating - a >= 0
-            ? 'mdi-star'
-            : rating - a >= -0.5
-              ? 'mdi-star-half-full'
-              : 'mdi-star-outline'
-      "
+      :icon="tempRating ? determineIcon(tempRating, a) : determineIcon(rating, a)"
       @click="rating = a"
       @mouseover="tempRating = a"
       @mouseleave="tempRating = undefined"
