@@ -16,6 +16,9 @@ const emailRule = (value: any) => {
   const pattern = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
   return pattern.test(value) || 'Invalid e-mail.';
 };
+const passwordRule = (value: any) => {
+  return value.length >= 6 || 'Password must be at least 6 characters';
+};
 const confirmedPasswordRule = (value: any) => {
   return value === password.value || 'Passwords do not match';
 };
@@ -69,7 +72,7 @@ const submit = async (event: SubmitEventPromise) => {
           label="Password"
           type="password"
           hide-details="auto"
-          :rules="rules"
+          :rules="[...rules, passwordRule]"
           v-model="password"
         />
         <v-text-field
