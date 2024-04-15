@@ -7,12 +7,12 @@ import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode, ssrBuild }) => {
+export default defineConfig(({ command, mode }) => {
   if (command === 'serve') {
     return {
       plugins: [
         vue({
-          template: { transformAssetUrls }
+          template: { transformAssetUrls },
         }),
         // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
         vuetify({
@@ -22,18 +22,10 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       define: { 'process.env': {} },
       resolve: {
         alias: {
-          '@': fileURLToPath(new URL('./src', import.meta.url))
+          '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
 
-        extensions: [
-          '.js',
-          '.json',
-          '.jsx',
-          '.mjs',
-          '.ts',
-          '.tsx',
-          '.vue',
-        ],
+        extensions: ['.js', '.json', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
       },
       server: {
         port: 3000,
@@ -45,43 +37,33 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           },
         },
       },
-    }
+    };
   } else {
     // command === 'build'
     return {
       build: {
-        outDir: '../404_game_portal.backend/wwwroot'
+        outDir: '../404_game_portal.backend/wwwroot',
       },
       plugins: [
         vue({
-          template: { transformAssetUrls }
+          template: { transformAssetUrls },
         }),
         // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
         vuetify({
           autoImport: true,
         }),
       ],
-        define: { 'process.env': {} },
+      define: { 'process.env': {} },
       resolve: {
         alias: {
-          '@': fileURLToPath(new URL('./src', import.meta.url))
+          '@': fileURLToPath(new URL('./src', import.meta.url)),
         },
 
-        extensions: [
-          '.js',
-          '.json',
-          '.jsx',
-          '.mjs',
-          '.ts',
-          '.tsx',
-          '.vue',
-        ],
+        extensions: ['.js', '.json', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
       },
       server: {
         port: 3000,
       },
-    }
-
+    };
   }
-}
-)
+});

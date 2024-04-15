@@ -38,9 +38,6 @@ const actualWidth = computed(() => {
 const actualHeight = computed(() => {
   return props.height ?? '100%';
 });
-const actualObjectFit = computed(() => {
-  return props.cover ? 'cover' : 'contain';
-});
 </script>
 
 <template>
