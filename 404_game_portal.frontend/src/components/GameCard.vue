@@ -23,6 +23,7 @@ const show = ref(false);
         <div>
           <div class="shadow">
             <CustomImage
+              v-if="showImage"
               :filePath="game.image"
               :alternativePath="'https://picsum.photos/1000?random=' + game.id"
               height="200px"

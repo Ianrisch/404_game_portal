@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useFirebase } from '@/store/useFirebase';
 
 const props = defineProps<{
   filePath: string;
-  width?: string;
-  height?: string;
+  width?: string | number;
+  height?: string | number;
   cover?: boolean;
   alternativePath?: string;
   alt?: string;
@@ -14,10 +14,23 @@ const props = defineProps<{
 const firebase = useFirebase();
 
 const imageSrc = ref<string>();
-firebase.getUrlForFile(props.filePath).then((url) => {
-  console.log(url + 'dsfgsg');
-  imageSrc.value = url;
-});
+const loading = ref(true);
+
+watch(
+  () => props.filePath,
+  () => {
+    loading.value = true;
+    firebase
+      .getUrlForFile(props.filePath)
+      .then((url) => {
+        imageSrc.value = url;
+      })
+      .finally(() => {
+        loading.value = false;
+      });
+  },
+  { immediate: true },
+);
 
 const actualWidth = computed(() => {
   return props.width ?? '100%';
@@ -31,15 +44,33 @@ const actualObjectFit = computed(() => {
 </script>
 
 <template>
-  <div v-if="imageSrc || alternativePath">
-    <img :src="imageSrc ?? alternativePath" :alt="alt ?? filePath" />
+  <div class="custom-img" v-if="!loading && (imageSrc || alternativePath)">
+    <v-img
+      :src="imageSrc ?? alternativePath"
+      :alt="alt ?? filePath"
+      :width="actualWidth"
+      :height="actualHeight"
+      cover
+    />
   </div>
+  <v-skeleton-loader
+    v-else
+    :elevation="24"
+    class="mx-auto"
+    :loading="loading"
+    type="image"
+    :width="actualWidth"
+    :height="actualHeight"
+  />
 </template>
 
 <style scoped lang="scss">
-img {
+.custom-img {
   width: v-bind(actualWidth);
   height: v-bind(actualHeight);
-  object-fit: v-bind(actualObjectFit);
+}
+:deep(.v-skeleton-loader__image) {
+  width: v-bind(actualWidth);
+  height: v-bind(actualHeight);
 }
 </style>
