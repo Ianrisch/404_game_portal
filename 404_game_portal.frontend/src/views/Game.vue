@@ -6,6 +6,7 @@ import { ref, watch } from 'vue';
 import DescriptionShortener from '@/components/DescriptionShortener.vue';
 import StarBar from '@/components/StarBar.vue';
 import RatingCommentCard from '@/components/RatingCommentCard.vue';
+import CustomImage from '@/components/CustomImage.vue';
 
 const props = defineProps<{
   id: string;
@@ -31,14 +32,11 @@ watch(
       </v-row>
       <v-row>
         <v-col cols="12" md="8">
-          <v-img
-            :src="
-              result.image.length == 0
-                ? 'https://picsum.photos/1920/1080/?random=' + result.id
-                : result.image
-            "
-            alt="test"
-            width="100%"
+          <CustomImage
+            :filePath="result.image"
+            :alternativePath="'https://picsum.photos/1000?random=' + result.id"
+            height="432px"
+            cover
           />
         </v-col>
         <v-col cols="12" md="4">

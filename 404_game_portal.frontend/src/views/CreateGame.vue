@@ -43,7 +43,7 @@ const chosenPlatforms = ref<Platform[]>([]);
 
 const submit = async (event: SubmitEventPromise) => {
   if ((await event).valid) {
-    useCreateGame.createPromise(creationModel.value);
+    await useCreateGame.createPromise(creationModel.value);
   }
 };
 </script>

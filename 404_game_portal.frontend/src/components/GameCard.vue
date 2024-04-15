@@ -4,6 +4,7 @@ import { USK } from '@/api/game';
 import { ref } from 'vue';
 import CardTitleTooltip from '@/components/CardTitleTooltip.vue';
 import StarBar from '@/components/StarBar.vue';
+import CustomImage from '@/components/CustomImage.vue';
 
 defineProps<{
   game: Game;
@@ -21,11 +22,9 @@ const show = ref(false);
       <v-window-item :value="false">
         <div>
           <div class="shadow">
-            <v-img
-              v-if="showImage"
-              :src="
-                game.image.length == 0 ? 'https://picsum.photos/1000?random=' + game.id : game.image
-              "
+            <CustomImage
+              :filePath="game.image"
+              :alternativePath="'https://picsum.photos/1000?random=' + game.id"
               height="200px"
               cover
             />
