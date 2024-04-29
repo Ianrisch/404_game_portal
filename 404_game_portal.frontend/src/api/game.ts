@@ -14,7 +14,7 @@ export enum USK {
 }
 
 export type Game = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   usk: USK;
