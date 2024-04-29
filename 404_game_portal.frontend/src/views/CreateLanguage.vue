@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { LanguageCreationData } from '@/api/language';
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
-import rules from '@/util/roules';
+import rules from '@/util/rules';
 const creationData = ref<LanguageCreationData>({
   languageName: '',
   gameIds: [],
@@ -22,7 +22,7 @@ getGames.createPromise({});
         label="Language Name"
         v-model="creationData.languageName"
         hide-details="auto"
-        :rules="rules"
+        :rules="[rules.required]"
         :loading="loading"
         :disabled="loading"
       />

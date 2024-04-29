@@ -4,7 +4,7 @@ import { SubmitEventPromise } from 'vuetify';
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { useRouter } from 'vue-router';
-import rules from '@/util/roules';
+import rules from '@/util/rules';
 
 const router = useRouter();
 
@@ -58,13 +58,13 @@ const submit = async (event: SubmitEventPromise) => {
           label="Email address"
           placeholder="johndoe@gmail.com"
           type="email"
-          :rules="[...rules, emailRule, emailTaken]"
+          :rules="[rules.required, emailRule, emailTaken]"
           v-model="email"
         />
         <v-text-field
           hide-details="auto"
           label="Username"
-          :rules="[...rules, usernameTakenRule]"
+          :rules="[rules.required, usernameTakenRule]"
           v-model="username"
         />
         <v-text-field
@@ -72,7 +72,7 @@ const submit = async (event: SubmitEventPromise) => {
           label="Password"
           type="password"
           hide-details="auto"
-          :rules="[...rules, passwordRule]"
+          :rules="[rules.required, passwordRule]"
           v-model="password"
         />
         <v-text-field
@@ -80,7 +80,7 @@ const submit = async (event: SubmitEventPromise) => {
           label="Confirm your Password"
           type="password"
           hide-details="auto"
-          :rules="[...rules, confirmedPasswordRule]"
+          :rules="[rules.required, confirmedPasswordRule]"
           v-model="confirmedPassword"
         />
         <div class="loginButtons">

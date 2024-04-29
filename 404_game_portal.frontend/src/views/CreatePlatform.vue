@@ -5,7 +5,7 @@ import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { Game } from '@/api/game';
 import PriceCombiner from '@/components/PriceCombiner.vue';
-import rules from '@/util/roules';
+import rules from '@/util/rules';
 
 const { createPromise, loading } = usePromise(api.createPlatform);
 const creationData = ref<PlatformCreationData>({
@@ -29,7 +29,7 @@ getGames.createPromise({});
         hide-details="auto"
         :loading="loading"
         :disabled="loading"
-        :rules="rules"
+        :rules="[rules.required]"
       />
       <v-text-field
         label="Platform Version"
@@ -44,7 +44,7 @@ getGames.createPromise({});
         hide-details="auto"
         :loading="loading"
         :disabled="loading"
-        :rules="rules"
+        :rules="[rules.required]"
       />
       <v-select
         label="Games"

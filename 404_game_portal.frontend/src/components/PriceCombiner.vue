@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import rules from '@/util/roules';
+import rules from '@/util/rules';
 import { IdAndPrice, Price } from '@/types/IdAndPrice';
 
 const props = defineProps<{
@@ -48,7 +48,7 @@ const getId = (item: any) => {
         label="Price"
         type="number"
         suffix="€"
-        :rules="rules"
+        :rules="[rules.required]"
         @update:modelValue="
           (newValue) => {
             const id = getId(item);

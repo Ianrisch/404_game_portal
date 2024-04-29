@@ -8,7 +8,7 @@ import CommentSection from '@/components/CommentSection.vue';
 import { SubmitEventPromise } from 'vuetify';
 import { useCurrentUserStore } from '@/store/currentUserStore';
 import { Role } from '@/api/auth';
-import rules from '@/util/roules';
+import rules from '@/util/rules';
 
 const props = defineProps<{
   gameId: string;
@@ -59,7 +59,7 @@ const submit = async (event: SubmitEventPromise) => {
     >
       <v-col cols="12" md="8">
         <v-form @submit.prevent="submit">
-          <v-textarea label="Comment" v-model="commentText" :rules="rules" />
+          <v-textarea label="Comment" v-model="commentText" :rules="[rules.required]" />
           <v-btn type="submit">Submit comment</v-btn>
         </v-form>
       </v-col>

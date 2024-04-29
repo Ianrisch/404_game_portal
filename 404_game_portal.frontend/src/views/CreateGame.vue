@@ -3,7 +3,7 @@ import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { computed, ref } from 'vue';
 import { type GameCreationData, USK } from '@/api/game';
-import rules from '@/util/roules';
+import rules from '@/util/rules';
 import { Platform } from '@/api/platformAndPrice';
 import PriceCombiner from '@/components/PriceCombiner.vue';
 import { SubmitEventPromise } from 'vuetify';
@@ -56,7 +56,7 @@ const submit = async (event: SubmitEventPromise) => {
           label="Game Name"
           hide-details="auto"
           v-model="creationModel.name"
-          :rules="rules"
+          :rules="[rules.required]"
           :loading="createLoading"
           :disabled="createLoading"
         />
@@ -64,7 +64,7 @@ const submit = async (event: SubmitEventPromise) => {
           label="Description"
           hide-details="auto"
           v-model="creationModel.description"
-          :rules="rules"
+          :rules="[rules.required]"
           :loading="createLoading"
           :disabled="createLoading"
         />
@@ -73,7 +73,7 @@ const submit = async (event: SubmitEventPromise) => {
           label="Release Date"
           hide-details="auto"
           v-model="creationModel.releaseDate"
-          :rules="rules"
+          :rules="[rules.required]"
           :loading="createLoading"
           :disabled="createLoading"
         />

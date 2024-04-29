@@ -2,10 +2,10 @@
 import { useCurrentUserStore } from '@/store/currentUserStore';
 import { ref } from 'vue';
 import { SubmitEventPromise } from 'vuetify';
+import rules from '@/util/rules';
 
 const currentUserStore = useCurrentUserStore();
 
-const rules = ref([(value: any) => !!value || 'Required']);
 const emailOrUsername = ref<string>('');
 const password = ref<string>('');
 
@@ -29,7 +29,7 @@ const submit = async (event: SubmitEventPromise) => {
             label="Email or username"
             placeholder="johndoe@gmail.com"
             type="email"
-            :rules="rules"
+            :rules="[rules.required]"
             v-model="emailOrUsername"
             :error-messages="currentUserStore.loginError ? ['Invalid credentials'] : []"
           />
@@ -39,7 +39,7 @@ const submit = async (event: SubmitEventPromise) => {
             type="password"
             hint="Enter your password"
             hide-details="auto"
-            :rules="rules"
+            :rules="[rules.required]"
             v-model="password"
             :error-messages="currentUserStore.loginError ? ['Invalid credentials'] : []"
           />

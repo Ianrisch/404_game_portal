@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import rules from '@/util/roules';
+import rules from '@/util/rules';
 import { ref } from 'vue';
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
@@ -44,7 +44,7 @@ const submit = async (event: SubmitEventPromise) => {
     </template>
     <v-card>
       <v-form @submit.prevent="submit">
-        <v-textarea label="Comment" v-model="updatedCommentText" :rules="rules" />
+        <v-textarea label="Comment" v-model="updatedCommentText" :rules="[rules.required]" />
         <div class="actions">
           <v-btn @click="showDialog = false" type="submit">Save changes</v-btn>
           <v-btn @click="showDialog = false">Cancel</v-btn>
