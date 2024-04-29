@@ -23,6 +23,7 @@ public class Game
         USK = creationViewModel.USK;
         ReleaseDate = creationViewModel.ReleaseDate;
         Description = creationViewModel.Description;
+        Image = "";
     }
 
     public Game()

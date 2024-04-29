@@ -4,7 +4,7 @@ namespace _404_game_portal.backend.ViewModels;
 
 public class GameCreationViewModel
 {
-    public string Name;
+    public string Name { get; set; }
     public List<GameCreationPriceAndPlatformViewModel> Platforms { get; set; }
     public Usk USK { get; set; }
     public DateOnly ReleaseDate { get; set; }

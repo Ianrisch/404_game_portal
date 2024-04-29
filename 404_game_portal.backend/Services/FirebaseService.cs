@@ -1,4 +1,3 @@
-using Firebase.Auth;
 using Firebase.Storage;
 
 namespace _404_game_portal.backend.Services;
@@ -18,7 +17,7 @@ public class FirebaseService : IFirebaseService
     {
         var uplaodTask = _firebaseStorage
             .Child(path)
-            .Child(newFileName + file.ContentType)
+            .Child(newFileName +"." + file.FileName.Split(".").Last())
             .PutAsync(file.OpenReadStream());
 
         uplaodTask.Progress.ProgressChanged += (s, e) =>

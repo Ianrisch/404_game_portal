@@ -1,4 +1,5 @@
-﻿using _404_game_portal.backend.Attributes;
+﻿using System.Text.Json;
+using _404_game_portal.backend.Attributes;
 using _404_game_portal.backend.Enums;
 using _404_game_portal.backend.Models;
 using _404_game_portal.backend.Repositories;
@@ -26,7 +27,12 @@ public class GameController(IGameRepository gameRepository, IFirebaseService fir
     [CustomAuthorize(Role.Admin)]
     public async Task<ActionResult<GameViewModel>> Create([FromForm] GameCreationForm creationForm)
     {
-        var gameCreationViewModel = JsonSerializer.Deserialize<GameCreationViewModel>(creationForm.GameCreationData);
+        var gameCreationViewModel = JsonSerializer.Deserialize<GameCreationViewModel>(creationForm.GameCreationData,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new DateOnlyConverter() }
+            });
 
         if (string.IsNullOrWhiteSpace(creationForm.GameCreationData) || gameCreationViewModel == null)
             return BadRequest("GameCreationViewModel is missing");

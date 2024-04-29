@@ -9,7 +9,19 @@ import PriceCombiner from '@/components/PriceCombiner.vue';
 import { SubmitEventPromise } from 'vuetify';
 import { da } from 'vuetify/locale';
 
-const useCreateGame = usePromise(api.createGame);
+const useCreateGame = usePromise(api.createGame, () => {
+  files.value = [];
+  creationModel.value = {
+    name: '',
+    description: '',
+    usk: 0,
+    releaseDate: undefined,
+    platforms: [],
+    features: [],
+    languages: [],
+  };
+});
+
 const createLoading = useCreateGame.loading;
 
 const platforms = usePromise(api.fetchPlatforms);
@@ -45,7 +57,7 @@ const submit = async (event: SubmitEventPromise) => {
   if ((await event).valid && files.value) {
     await useCreateGame.createPromise({
       gameCreationData: creationModel.value,
-      image: files.value[0].slice(),
+      image: files.value[0],
     });
   }
 };
