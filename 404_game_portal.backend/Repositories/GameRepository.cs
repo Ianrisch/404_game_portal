@@ -14,6 +14,7 @@ public interface IGameRepository
     public GameDto Create(GameCreationViewModel game);
     public List<GameDto> GetAll(GameFilterOptions filterOptions);
     List<GameDto> GetByIds(List<Guid> gameIds, bool includeAll = false);
+    Task<GameDto> UpdateGameImage(Guid id, string imagePath);
 }
 
 public class GameRepository : IGameRepository
@@ -92,5 +93,14 @@ public class GameRepository : IGameRepository
             .Where(e => gameIds.Contains(e.Id))
             .ToDto()
             .ToList();
+    }
+
+    public async Task<GameDto> UpdateGameImage(Guid id, string imagePath)
+    {
+        var game = await _context.Games.FirstAsync(g => g.Id == id);
+        game.Image = imagePath;
+        await _context.SaveChangesAsync();
+
+        return GetById(id);
     }
 }

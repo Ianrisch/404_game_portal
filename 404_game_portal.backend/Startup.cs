@@ -24,6 +24,7 @@ public class Startup
     private void AddServices()
     {
         _services.AddScoped<IAuthService, AuthService>();
+        _services.AddSingleton<IFirebaseService, FirebaseService>();
 
         _services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         _services.AddControllers().AddNewtonsoftJson(x =>

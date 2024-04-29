@@ -5,12 +5,14 @@ using _404_game_portal.backend.Repositories;
 using _404_game_portal.backend.Services;
 using _404_game_portal.backend.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace _404_game_portal.backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class GameController(IGameRepository gameRepository) : ControllerBase
+public class GameController(IGameRepository gameRepository, IFirebaseService firebaseService) : ControllerBase
 {
     [HttpGet]
     public List<GameViewModel> GetAll([FromQuery] GameFilterOptions filterOptions)
@@ -22,9 +24,20 @@ public class GameController(IGameRepository gameRepository) : ControllerBase
 
     [HttpPost]
     [CustomAuthorize(Role.Admin)]
-    public GameViewModel Create(GameCreationViewModel creationViewModel)
+    public async Task<ActionResult<GameViewModel>> Create([FromForm] GameCreationForm creationForm)
     {
-        return new GameViewModel(gameRepository.Create(creationViewModel));
+        var gameCreationViewModel = JsonSerializer.Deserialize<GameCreationViewModel>(creationForm.GameCreationData);
+
+        if (string.IsNullOrWhiteSpace(creationForm.GameCreationData) || gameCreationViewModel == null)
+            return BadRequest("GameCreationViewModel is missing");
+
+        var game = gameRepository.Create(gameCreationViewModel);
+
+        var imagePath = await firebaseService.UploadImage("game", game.Id.ToString(), creationForm.Image);
+
+        game = await gameRepository.UpdateGameImage(game.Id, imagePath);
+
+        return new GameViewModel(game);
     }
 
     [HttpGet("{id:guid}")]
