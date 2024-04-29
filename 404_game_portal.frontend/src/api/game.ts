@@ -3,6 +3,7 @@ import { Feature } from '@/api/feature';
 import { PlatformAndPrice } from '@/api/platformAndPrice';
 import { Language } from '@/api/language';
 import { IdAndPrice } from '@/types/IdAndPrice';
+import { File } from '@babel/types';
 
 export enum USK {
   USK0,
@@ -44,7 +45,11 @@ export type GameCreationData = {
   description: string;
   features: string[];
   languages: string[];
-  image: string;
+};
+
+export type GameCreationDataWithImage = {
+  gameCreationData: GameCreationData;
+  image: Blob;
 };
 
 export const fetchGames = async (options: FilterOptions): Promise<Game[]> =>
@@ -59,5 +64,12 @@ export const fetchGames = async (options: FilterOptions): Promise<Game[]> =>
       (options.minRating != undefined ? `&minRating=${options.minRating}` : ''),
   );
 export const fetchGame = async (id: string): Promise<Game> => httpClient.get(`/api/game/${id}`);
-export const createGame = async (data: GameCreationData): Promise<Game> =>
-  httpClient.post(`/api/game`, data);
+export const createGame = async (data: GameCreationDataWithImage): Promise<Game> =>
+  httpClient.post(`/api/game`, toGameFormData(data));
+
+const toGameFormData = (data: GameCreationDataWithImage): FormData => {
+  const formData = new FormData();
+  formData.append('gameCreationData', JSON.stringify(data.gameCreationData));
+  formData.append('image', data.image);
+  return formData;
+};

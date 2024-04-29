@@ -2,7 +2,7 @@
 import usePromise from '@/composables/usePromise';
 import api from '@/api';
 import { computed, ref } from 'vue';
-import { type GameCreationData, USK } from '@/api/game';
+import { type GameCreationData, GameCreationDataWithImage, USK } from '@/api/game';
 import rules from '@/util/rules';
 import { Platform } from '@/api/platformAndPrice';
 import PriceCombiner from '@/components/PriceCombiner.vue';
@@ -24,8 +24,8 @@ const creationModel = ref<GameCreationData>({
   platforms: [],
   features: [],
   languages: [],
-  image: '',
 });
+const files = ref<File[]>([]);
 
 platforms.createPromise();
 features.createPromise();
@@ -42,8 +42,11 @@ const languagesArray = languages.result;
 const chosenPlatforms = ref<Platform[]>([]);
 
 const submit = async (event: SubmitEventPromise) => {
-  if ((await event).valid) {
-    await useCreateGame.createPromise(creationModel.value);
+  if ((await event).valid && files.value) {
+    await useCreateGame.createPromise({
+      gameCreationData: creationModel.value,
+      image: files.value[0].slice(),
+    });
   }
 };
 </script>
@@ -129,11 +132,12 @@ const submit = async (event: SubmitEventPromise) => {
           :loading="createLoading"
           :disabled="createLoading"
         />
-        <v-text-field
-          label="Image URL"
+        <v-file-input
+          label="Image"
+          accept="image/*"
           hide-details="auto"
-          v-model="creationModel.image"
-          :rules="rules"
+          v-model="files"
+          :rules="[rules.fileRequired]"
           :loading="createLoading"
           :disabled="createLoading"
         />

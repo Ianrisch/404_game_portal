@@ -5,52 +5,21 @@ enum HttpMethod {
   PUT = 'PUT',
   DELETE = 'DELETE',
 }
-const sendXML = async <T>(
-  url: string,
-  method: HttpMethod,
-  form: FormData,
-  ignoreRedirect: boolean,
-) => {
-  try {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
 
-    xhr.onload = () => {
-      if (xhr.readyState === xhr.DONE) {
-        canContinue = true;
-      }
-    };
-    xhr.onerror = () => {
-      throw new Error(xhr.statusText.toString());
-    };
-
-    xhr.send(form);
-    let canContinue: boolean = false;
-
-    while (!canContinue) {
-      await new Promise((r) => setTimeout(r, 200));
-    }
-
-    if (xhr.status === 0 && !ignoreRedirect) {
-      // do nothing
-    }
-
-    return JSON.parse(xhr.response) as Promise<T>;
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
-};
+export interface HttpError extends Error {
+  statusCode?: number;
+}
 
 const send = async <T>(
   url: string,
   method: HttpMethod,
-  payload: Record<string, unknown> | null,
+  payload: Record<string, unknown> | FormData | null,
   ignoreRedirect = false,
+  download = false,
+  downloadFileName?: string,
 ): Promise<T> => {
   const headers: Record<string, string> = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
   };
 
   const options: RequestInit = {
@@ -58,7 +27,11 @@ const send = async <T>(
     headers,
     redirect: 'manual',
   };
-  if (payload) {
+
+  if (payload instanceof FormData) {
+    options.body = payload;
+  } else if (payload) {
+    headers['Content-Type'] = 'application/json';
     options.body = JSON.stringify(payload);
   }
 
@@ -78,17 +51,32 @@ const send = async <T>(
     );
 
     if (response.status === 0 && !ignoreRedirect) {
-      // do nothing for now
+      window.location.href = 'Login?ReturnUrl=' + window.location;
     }
 
     if (!response.ok) {
-      throw new Error(response.status.toString());
+      const errorData = await response.json();
+      const error: HttpError = new Error(errorData.message || 'Network Error');
+      error.statusCode = response.status;
+      throw error;
+    }
+
+    if (download) {
+      const url = window.URL.createObjectURL(await response.blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = downloadFileName!;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      return undefined as unknown as Promise<T>;
     }
 
     return response.json() as Promise<T>;
-  } catch (e) {
-    console.error(e);
-    throw e;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
 
@@ -96,24 +84,25 @@ const httpClient = {
   async get<T>(url: string, ignoreRedirect = false): Promise<T> {
     return send(url, HttpMethod.GET, null, ignoreRedirect);
   },
-  async post<T>(url: string, payload: Record<string, unknown>, ignoreRedirect = false): Promise<T> {
+  async post<T>(
+    url: string,
+    payload: Record<string, unknown> | FormData,
+    ignoreRedirect = false,
+  ): Promise<T> {
     return send(url, HttpMethod.POST, payload, ignoreRedirect);
-  },
-  async postFileInModel<T>(url: string, form: FormData, ignoreRedirect = false): Promise<T> {
-    return sendXML(url, HttpMethod.POST, form, ignoreRedirect);
-  },
-  async putFileInModel<T>(url: string, form: FormData, ignoreRedirect = false): Promise<T> {
-    return sendXML(url, HttpMethod.PUT, form, ignoreRedirect);
   },
   async put<T>(
     url: string,
-    payload: Record<string, unknown> | null,
+    payload: Record<string, unknown> | FormData | null,
     ignoreRedirect = false,
   ): Promise<T> {
     return send(url, HttpMethod.PUT, payload, ignoreRedirect);
   },
   async delete<T>(url: string, ignoreRedirect = false): Promise<T> {
     return send(url, HttpMethod.DELETE, null, ignoreRedirect);
+  },
+  async download(url: string, fileName: string): Promise<void> {
+    return send(url, HttpMethod.GET, null, false, true, fileName);
   },
 };
 
